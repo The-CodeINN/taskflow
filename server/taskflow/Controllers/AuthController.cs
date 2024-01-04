@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using taskflow.CustomActionFilters;
+using taskflow.Models.Domain;
 using taskflow.Models.DTO;
 using taskflow.Repositories;
 
@@ -9,10 +11,10 @@ namespace taskflow.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
         private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
+        public AuthController(UserManager<User> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
@@ -21,12 +23,15 @@ namespace taskflow.Controllers
                 
         [HttpPost]
         [Route("Register")]
+        [ValidateModel]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var identityUser = new IdentityUser
+            var identityUser = new User
             {
                 UserName = registerRequestDto.Username,
-                Email = registerRequestDto.Username
+                Email = registerRequestDto.Username,
+                FirstName = registerRequestDto.Firstname,
+                LastName = registerRequestDto.Lastname
             };
 
             var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);

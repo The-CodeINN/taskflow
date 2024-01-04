@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using taskflow.Data;
 using taskflow.Mappings;
+using taskflow.Models.Domain;
 using taskflow.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TaskFlowDbContext>(options => 
         options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString"))
     );
+builder.Services.AddDbContext<TaskFlowAuthDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString"))
+);
+
 
 // Inject Repositories
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
@@ -26,9 +31,9 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 // Add Identity packages/solutions
-builder.Services.AddIdentityCore<IdentityUser>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("TaskFlow")
-    .AddEntityFrameworkStores<TaskFlowDbContext>()
+builder.Services.AddIdentityCore<User>()
+    .AddTokenProvider<DataProtectorTokenProvider<User>>("TaskFlow")
+    .AddEntityFrameworkStores<TaskFlowAuthDbContext>()
     .AddDefaultTokenProviders();
 
 // Setup Identity Options.

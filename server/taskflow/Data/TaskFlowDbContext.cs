@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using taskflow.Models.Domain;
 
 namespace taskflow.Data
 {
-    public class TaskFlowDbContext : DbContext
+    public class TaskFlowDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public TaskFlowDbContext(DbContextOptions<TaskFlowDbContext> dbContextOptions) : base(dbContextOptions) {}

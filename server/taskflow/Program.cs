@@ -16,12 +16,11 @@ builder.Services.AddControllers();
 
 
 // Inject TaskFlowDbContext into the app
+/*builder.Services.AddDbContext<TaskFlowDbContext>(options => 
+        options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));*/
+
 builder.Services.AddDbContext<TaskFlowDbContext>(options => 
-        options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString"))
-    );
-builder.Services.AddDbContext<TaskFlowAuthDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString"))
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
 
 
 // Inject Repositories
@@ -31,9 +30,9 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 // Add Identity packages/solutions
-builder.Services.AddIdentityCore<User>()
-    .AddTokenProvider<DataProtectorTokenProvider<User>>("TaskFlow")
-    .AddEntityFrameworkStores<TaskFlowAuthDbContext>()
+builder.Services.AddIdentityCore<ApplicationUser>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("TaskFlow")
+    .AddEntityFrameworkStores<TaskFlowDbContext>()
     .AddDefaultTokenProviders();
 
 // Setup Identity Options.

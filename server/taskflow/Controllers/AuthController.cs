@@ -11,10 +11,10 @@ namespace taskflow.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<User> userManager, ITokenRepository tokenRepository)
+        public AuthController(UserManager<ApplicationUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
@@ -26,7 +26,7 @@ namespace taskflow.Controllers
         [ValidateModel]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var identityUser = new User
+            var identityUser = new ApplicationUser
             {
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Username,
@@ -47,6 +47,7 @@ namespace taskflow.Controllers
         // Login route
         [HttpPost]
         [Route("Login")]
+        [ValidateModel]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             // FInd the user by email

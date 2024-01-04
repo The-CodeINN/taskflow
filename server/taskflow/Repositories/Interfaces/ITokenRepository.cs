@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace taskflow.Repositories
+namespace taskflow.Repositories.Interfaces
 {
     public interface ITokenRepository
     {
-        string CreateJWTToken(IdentityUser user);
+        string CreateJwtToken(IdentityUser user);
     }
 }
 

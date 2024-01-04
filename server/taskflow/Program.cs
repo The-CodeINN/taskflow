@@ -7,6 +7,8 @@ using taskflow.Data;
 using taskflow.Mappings;
 using taskflow.Models.Domain;
 using taskflow.Repositories;
+using taskflow.Repositories.Impls;
+using taskflow.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

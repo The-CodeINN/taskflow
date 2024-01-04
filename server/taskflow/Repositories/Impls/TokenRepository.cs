@@ -3,12 +3,13 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using taskflow.Repositories.Interfaces;
 
-namespace taskflow.Repositories
+namespace taskflow.Repositories.Impls
 {
     public class TokenRepository(IConfiguration configuration) : ITokenRepository
     {
-        public string CreateJWTToken(IdentityUser user)
+        public string CreateJwtToken(IdentityUser user)
         {
             // Create claims
             var claims = new List<Claim>();

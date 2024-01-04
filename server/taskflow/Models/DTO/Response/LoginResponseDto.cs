@@ -1,4 +1,4 @@
-﻿namespace taskflow.Models.DTO
+﻿namespace taskflow.Models.DTO.Response
 {
     public class LoginResponseDto
     {

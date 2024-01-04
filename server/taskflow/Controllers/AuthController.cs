@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using taskflow.CustomActionFilters;
 using taskflow.Models.Domain;
 using taskflow.Models.DTO;
+using taskflow.Models.DTO.Request;
+using taskflow.Models.DTO.Response;
 using taskflow.Repositories;
+using taskflow.Repositories.Interfaces;
 
 namespace taskflow.Controllers
 {
@@ -58,7 +61,7 @@ namespace taskflow.Controllers
                 var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
                 if (checkPasswordResult)
                 {
-                    var jwtToken = tokenRepository.CreateJWTToken(user);
+                    var jwtToken = tokenRepository.CreateJwtToken(user);
 
                     var response = new LoginResponseDto
                     {

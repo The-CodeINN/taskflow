@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace taskflow.Models.DTO
+namespace taskflow.Models.DTO.Request
 {
     public class LoginRequestDto
     {

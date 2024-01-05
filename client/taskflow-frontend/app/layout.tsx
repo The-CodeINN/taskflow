@@ -1,21 +1,21 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Work_Sans } from "next/font/google";
+import "./globals.css";
 
-import { siteConfig } from '@/config/site';
+import { siteConfig } from "@/config/site";
 
-const inter = Inter({ subsets: ['latin'] });
+const work_sans = Work_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: '%s | ' + siteConfig.name,
+    template: "%s | " + siteConfig.name,
   },
   description: siteConfig.description,
   icons: [
     {
-      url: '/blue-logo.svg',
-      href: '/blue-logo.svg',
+      url: "/blue-logo.svg",
+      href: "/blue-logo.svg",
     },
   ],
 };
@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>{children}</body>
+    <html lang="en">
+      <body className={work_sans.className}>{children}</body>
     </html>
   );
 }

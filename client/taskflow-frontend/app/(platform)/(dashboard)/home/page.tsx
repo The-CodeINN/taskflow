@@ -40,28 +40,6 @@ const HomePage = () => {
             <CardDescription className="text-4xl font-bold">20</CardDescription>
           </CardHeader>
         </Card>
-        {/* <Card>
-          <CardHeader>
-            <CardTitle className="space-y-3">
-              <ClipboardList className="text-pink-700 w-6 h-6" />
-              <h1 className="font-medium text-xl">Pending Tasks</h1>
-              <CardDescription className="text-4xl font-bold">
-                15
-              </CardDescription>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="space-y-3">
-              <Layers3 className="text-orange-500 w-6 h-6" />
-              <h1 className="font-medium text-xl">Upcoming Tasks</h1>
-              <CardDescription className="text-4xl font-bold">
-                15
-              </CardDescription>
-            </CardTitle>
-          </CardHeader>
-        </Card> */}
       </div>
 
       <div className="py-10 space-y-3">

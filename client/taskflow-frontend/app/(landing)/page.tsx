@@ -9,7 +9,7 @@ const LandingPage = () => {
       <div>
       <Button className="bg-black text-white">Taskflow task manager now public</Button>
       <br/>
-     <p className='font-extrabold font-size:xx-large'> Manage your tasks your efficiently with ease.</p>
+     <p className='font-extrabold font-size:large'> Manage your tasks your efficiently with ease.</p>
 
         <p> AIDe is your hardw text-whiteorking 24/7 powering assistant empowering you with our
          blazingly <br/> fast dedicated AI analysis of any document via a chat interface.

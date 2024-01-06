@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
 import { siteConfig } from "@/config/site";
-import { siteConfig } from "@/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,13 +11,10 @@ export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: "%s | " + siteConfig.name,
-    template: "%s | " + siteConfig.name,
   },
   description: siteConfig.description,
   icons: [
     {
-      url: "/blue-logo.svg",
-      href: "/blue-logo.svg",
       url: "/blue-logo.svg",
       href: "/blue-logo.svg",
     },

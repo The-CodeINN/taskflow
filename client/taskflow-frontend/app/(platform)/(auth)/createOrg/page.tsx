@@ -130,7 +130,7 @@ const CreateOrg = () => {
                           )}
                         />
                       </div>
-                      <div className="px-6">
+                      <div className="">
                         <h2 className="text-1xl font-bold">Role</h2>
                         <FormField
                           control={form.control}

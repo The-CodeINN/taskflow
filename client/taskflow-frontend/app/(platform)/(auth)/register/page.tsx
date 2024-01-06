@@ -69,7 +69,7 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        <div className="bg-white h-screen md:w-[60%] md:rounded-l-[20px] w-full">
+        <div className="bg-white min-h-screen md:w-[60%] md:rounded-l-[20px] w-full">
           <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
             Create your account
           </h2>

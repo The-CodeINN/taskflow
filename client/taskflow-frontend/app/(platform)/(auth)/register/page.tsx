@@ -18,10 +18,10 @@ import { Button } from "@/components/ui/button";
 const registerFormSchema = z
   .object({
     firstname: z.string().min(2, {
-      message: "First name must contain at least 12 character(s)",
+      message: "First name must contain at least 2 character(s)",
     }),
     lastname: z.string().min(2, {
-      message: "Last Name must contain at least 12 character(s)",
+      message: "Last Name must contain at least 2 character(s)",
     }),
     email: z.string().email({
       message: "Invalid email",

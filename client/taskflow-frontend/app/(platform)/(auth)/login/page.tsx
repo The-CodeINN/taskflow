@@ -42,7 +42,7 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="flex bg-[#ffffff] justify-between ">
+    <section className="flex bg-[#ffffff] justify-between">
       <div className="bg-white h-screen md:w-[60%] md:rounded-l-[20px] w-full">
         <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
           Login to your account

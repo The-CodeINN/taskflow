@@ -42,13 +42,13 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="flex bg-[#ffffff] justify-between">
+    <section className="flex bg-[#ffffff] justify-between ">
       <div className="bg-white h-screen md:w-[60%] md:rounded-l-[20px] w-full">
         <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
           Login to your account
         </h2>
-        <p className=" md:invisible mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-blue-900 md: visible">
-          Don't have an account?{" "}
+        <p className=" md:invisible mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900 md: visible">
+          Don&apos;t have an account?
           <Link href="/register" className="text-[#3C3CFF] underline">
             Sign up
           </Link>
@@ -101,7 +101,7 @@ const LoginPage = () => {
       <div className=" bg-[#2f46a5] flex-col items-center w-[60%] hidden md:flex rounded-xl">
         <div className="text-right w-[60%] mt-10 font-bold text-[#FFFFFF]  ">
           <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-            Don't have an account?
+            Don&apos;t have an account?
           </h2>
           <p className="mt-9 text-center font-extralight text-[#000000] text-2xl ">
             Sign up and start managing your task right now!

@@ -6,9 +6,14 @@ import Link from "next/link";
 const LandingPage = () => {
   return (
     <div>
-      <section className=" flex flex-col-reverse sm:flex-row px-11">
+      <section className=" flex flex-col-reverse sm:flex-row px-11 mt-11">
         <div className="md:w-[60%] max-w-xl">
-          <h1 className="mt-20 sm:text-left text-4xl font-bold tracking-tight text-center">
+          <div className="bg-white mt-10">
+            <Button className="bg-[#22304e] text-white px-12 mt-5 mx-auto rounded-l-[20px] rounded-r-[20px]">
+              Taskflow task manager is now public!
+            </Button>
+          </div>
+          <h1 className="mt-3 sm:text-left text-4xl font-bold tracking-tight text-center">
             Manage your tasks efficiently and with ease.
           </h1>
           <p className="mt-3 sm:text-left text-gray-900 text-center">
@@ -33,13 +38,22 @@ const LandingPage = () => {
           />
         </div>
       </section>
-      <div>
-        <h1 className="text-center mt-20 text-5xl font-bold tracking-tight px-1">
+      <div className="px-1">
+        <h1 className="text-center mt-20 text-5xl font-bold tracking-tight">
           Start managing tasks in a minute
         </h1>
         <p className="text-center mt-3 px-3">
           With Taskflow, task and project management and has never been easier.
         </p>
+        <div className="flex justify-center items-center">
+          <Image
+            src={"/homeProj.png"}
+            alt="Illustration"
+            width={850}
+            height={500}
+            className=" sm:px-3 mt-10 max-w-full h-auto mb-5"
+          />
+        </div>
       </div>
     </div>
   );

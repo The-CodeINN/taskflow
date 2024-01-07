@@ -72,9 +72,9 @@ const CreateOrg = () => {
   };
 
   return (
-    <div className=" bg-[#2f46a5] h-screen">
+    <div className=" bg-[#2f46a5] min-h-screen">
       <section className="flex items-center justify-center py-20 md:py-0 ">
-        <Card className=" bg-[#eaebf4] md:w-[50%] mt-10">
+        <Card className=" bg-[#eaebf4] md:w-[50%] mt-10 mb-5">
           <div>
             <CardHeader>
               <CardTitle className="font-bold">

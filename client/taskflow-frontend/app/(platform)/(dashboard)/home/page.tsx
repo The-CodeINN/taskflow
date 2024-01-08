@@ -1,11 +1,6 @@
 import Header from "@/components/home-components/header";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import MetricCard from "@/components/home-components/metric-card";
+import TaskCard from "@/components/home-components/task-card";
 import { ClipboardList, Layers3, ListTodo } from "lucide-react";
 
 const HomePage = () => {
@@ -13,40 +8,33 @@ const HomePage = () => {
     <section>
       <Header />
       <div className="grid md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="space-y-3">
-              <ListTodo className=" text-violet-500 w-6 h-6" />
-              <span className="font-medium text-xl">Total Projects</span>
-            </CardTitle>
-            <CardDescription className="text-4xl font-bold">20</CardDescription>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="space-y-3">
-              <ClipboardList className="text-pink-700 w-6 h-6" />
-              <span className="font-medium text-xl">Total Projects</span>
-            </CardTitle>
-            <CardDescription className="text-4xl font-bold">20</CardDescription>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="space-y-3">
-              <ListTodo className=" text-violet-500 w-6 h-6" />
-              <span className="font-medium text-xl">Total Projects</span>
-            </CardTitle>
-            <CardDescription className="text-4xl font-bold">20</CardDescription>
-          </CardHeader>
-        </Card>
+        <MetricCard
+          title="Total Projects"
+          value="20"
+          icon={Layers3}
+          iconClassName="text-violet-500"
+        />
+        <MetricCard
+          title="Pending Tasks"
+          value="15"
+          icon={ClipboardList}
+          iconClassName="text-pink-700"
+        />
+        <MetricCard
+          title="Upcoming Tasks"
+          value="10"
+          icon={ListTodo}
+          iconClassName="text-violet-500"
+        />
       </div>
 
       <div className="py-10 space-y-3">
         <h1 className="font-bold text-xl">My Tasks</h1>
-        <Card className="">
-          <CardContent>Hello</CardContent>
-        </Card>
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
       </div>
     </section>
   );

@@ -1,73 +1,108 @@
-'use client';
+"use client";
 
-import { FolderKanban, Home, LogOut, UserRound } from 'lucide-react';
-import Logo from './logo';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { LogOut, Plus } from "lucide-react";
+import { useLocalStorage } from "usehooks-ts";
+import Logo from "./logo";
+import { Button } from "../ui/button";
+import { Accordion } from "../ui/accordion";
+import { NavbarItem, Workspace } from "./navbar-item";
+import { cn } from "@/lib/utils";
 
-const routes = [
-  {
-    label: 'Home',
-    path: '/home',
-    icon: Home,
-  },
-  {
-    label: 'Project',
-    path: '/project',
-    icon: FolderKanban,
-  },
-  {
-    label: 'Profile',
-    path: '/profile',
-    icon: UserRound,
-  },
-];
+interface SidebarProps {
+  storageKey?: string;
+}
 
-const Sidebar = () => {
-  const pathname = usePathname();
+const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
+  const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
+    storageKey,
+    {}
+  );
+
+  const WorkspaceList = [
+    {
+      name: "Workspace 1",
+      id: "1",
+    },
+    {
+      name: "Workspace 2",
+      id: "2",
+    },
+    {
+      name: "Workspace 3",
+      id: "3",
+    },
+  ];
+
+  const defaultAccordionValue: string[] = Object.keys(expanded).reduce(
+    (acc: string[], key: string) => {
+      if (expanded[key]) {
+        acc.push(key);
+      }
+
+      return acc;
+    },
+    []
+  );
+
+  const onExpand = (id: string) => {
+    setExpanded((curr) => ({
+      ...curr,
+      [id]: !expanded[id],
+    }));
+  };
+
   return (
-    <div className='flex flex-col h-full'>
-      <div className='px-3 py-10 flex-1 bg-primary md:rounded-r-lg'>
-        <div className='flex items-center justify-between mb-6 lg:mb-14 '>
-          <div className='pl-3 flex items-center'>
-            <Logo />
-          </div>
-        </div>
-        <div className='flex flex-col justify-between h-[75dvh] pt-10'>
-          <div className='space-y-2'>
-            {routes.map((route) => (
-              <Link
-                href={route.path}
-                key={route.path}
-                className={cn(
-                  'text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition',
-                  pathname.includes(route.path)
-                    ? 'bg-white text-charcoal'
-                    : 'text-white bg-none hover:bg-white/10'
-                )}
-              >
-                <div className='flex items-center flex-1 text-lg lg:text-xl'>
-                  <route.icon className={cn('h-5 w-5 mr-3 text-xl')} />
-                  {route.label}
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className='space-y-2'>
-            <Link
-              href='/'
-              className='text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition text-white bg-none hover:bg-white/10 items-center'
+    <>
+      <div className="flex flex-col h-full">
+        <div className="px-3 py-10 flex-1 bg-primary md:rounded-r-lg">
+          <div className="flex items-center justify-between mb-6 lg:mb-14 ">
+            <div className="">
+              <Logo />
+            </div>
+            <Button
+              className="p"
+              asChild
+              type="button"
+              size="icon"
+              variant="ghost"
             >
-              <LogOut className={cn('h-5 w-5 mr-3 text-xl')} />
-              <span className='flex items-center flex-1 text-lg lg:text-xl'>
-                Logout
-              </span>
-            </Link>
+              <Link href="/add-workflow">
+                <Plus className="h-6 w-6" />
+              </Link>
+            </Button>
+          </div>
+          <div className="flex flex-col justify-between h-[75dvh] pt-10">
+            <Accordion
+              type="multiple"
+              defaultValue={defaultAccordionValue}
+              className="space-y-2"
+            >
+              {WorkspaceList.map((workspace: Workspace) => (
+                <NavbarItem
+                  key={workspace.id}
+                  workspace={workspace}
+                  onExpand={onExpand}
+                  isExpanded={expanded[workspace.id]}
+                  isActive={workspace.id === "1"}
+                />
+              ))}
+            </Accordion>
+            <div className="space-y-2">
+              <Link
+                href="/"
+                className="text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition text-white bg-none hover:bg-white/10 items-center"
+              >
+                <LogOut className={cn("h-5 w-5 mr-3 text-xl")} />
+                <span className="flex items-center flex-1 text-lg lg:text-xl">
+                  Logout
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

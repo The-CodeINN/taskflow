@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import { Menu } from 'lucide-react';
-import Sidebar from './sidebar';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { Button } from '../ui/button';
-import { useEffect, useState } from 'react';
-import { useMobileSidebar } from '@/hooks/use-mobile-sidebar';
-import { usePathname } from 'next/navigation';
-import { on } from 'events';
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { useMobileSidebar } from "@/hooks/use-mobile-sidebar";
+import { usePathname } from "next/navigation";
+import Sidebar from "./sidebar";
 
 const MobileSidebar = () => {
   const pathname = usePathname();
@@ -33,15 +32,15 @@ const MobileSidebar = () => {
     <>
       <Button
         onClick={onOpen}
-        className='block md:hidden mr-2'
-        variant='ghost'
-        size='sm'
+        className="block md:hidden mr-2"
+        variant="ghost"
+        size="sm"
       >
         <Menu size={26} />
       </Button>
       <Sheet open={isOpen} onOpenChange={onClose}>
-        <SheetContent side='left' className='p-0'>
-          <Sidebar />
+        <SheetContent side="left" className="p-0">
+          <Sidebar storageKey="t-sidebar-mobile-state" />
         </SheetContent>
       </Sheet>
     </>

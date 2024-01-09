@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const registerFormSchema = z.object({
   email: z.string().email({
@@ -40,6 +41,7 @@ const LoginPage = () => {
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
+    toast.success("Login successful");
   };
 
   return (

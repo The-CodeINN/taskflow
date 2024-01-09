@@ -1,6 +1,6 @@
 import Header from "@/components/home-components/header";
 import MetricCard from "@/components/home-components/metric-card";
-import TaskCard from "@/components/home-components/task-card";
+import TaskCard from "@/components/project-components/task-card";
 import { ClipboardList, Layers3, ListTodo } from "lucide-react";
 
 const HomePage = () => {

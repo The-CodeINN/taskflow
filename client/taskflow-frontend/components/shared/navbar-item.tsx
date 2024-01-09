@@ -9,11 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
-
-export type Workspace = {
-  id: string;
-  name: string;
-};
+import { Workspace } from "@/@types";
 
 interface NavbarItemProps {
   isExpanded: boolean;
@@ -35,7 +31,7 @@ export const NavbarItem = ({
     {
       label: "Projects",
       icon: <Layout className="h-4 w-4 mr-2" />,
-      href: `/workspace/${workspace.id}/projects`,
+      href: `/workspace/${workspace.id}`,
     },
     {
       label: "Settings",
@@ -70,8 +66,8 @@ export const NavbarItem = ({
             size="default"
             onClick={() => onClick(route.href)}
             className={cn(
-              "w-full font-normal justify-start pl-10 mb-1",
-              pathname === route.href && "bg-sky-500/10 text-gray-200"
+              "w-full font-normal justify-start pl-10 mb-1 hover:bg-[#eaeaea] hover:text-gray-600",
+              pathname === route.href && "bg-white text-black"
             )}
             variant="ghost"
           >

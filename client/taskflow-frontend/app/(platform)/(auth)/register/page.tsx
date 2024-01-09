@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const registerFormSchema = z
   .object({
@@ -42,6 +44,8 @@ const registerFormSchema = z
 type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -58,6 +62,8 @@ const RegisterPage = () => {
   const onSubmit = (data: RegisterFormValues) => {
     const { confirmPassword, ...dataWithoutConfirmPassword } = data;
     console.log(dataWithoutConfirmPassword);
+    toast.success("Registered successfully");
+    router.push("/createOrg");
   };
 
   return (
@@ -172,7 +178,7 @@ const RegisterPage = () => {
                   />
                 </div>
                 <div className=" py-10">
-                  <Button className="w-full" type="submit">
+                  <Button className="w-full py-6" type="submit">
                     Create my account
                   </Button>
                 </div>

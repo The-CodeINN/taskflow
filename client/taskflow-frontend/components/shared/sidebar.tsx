@@ -6,33 +6,35 @@ import { useLocalStorage } from "usehooks-ts";
 import Logo from "./logo";
 import { Button } from "../ui/button";
 import { Accordion } from "../ui/accordion";
-import { NavbarItem, Workspace } from "./navbar-item";
+import { NavbarItem } from "./navbar-item";
 import { cn } from "@/lib/utils";
+import { Workspace } from "@/@types";
+import { mockData } from "@/db/mock.json";
 
 interface SidebarProps {
   storageKey?: string;
 }
+
+// export const WorkspaceList = [
+//   {
+//     name: "Workspace 1",
+//     id: "1",
+//   },
+//   {
+//     name: "Workspace 2",
+//     id: "2",
+//   },
+//   {
+//     name: "Workspace 3",
+//     id: "3",
+//   },
+// ];
 
 const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
     {}
   );
-
-  const WorkspaceList = [
-    {
-      name: "Workspace 1",
-      id: "1",
-    },
-    {
-      name: "Workspace 2",
-      id: "2",
-    },
-    {
-      name: "Workspace 3",
-      id: "3",
-    },
-  ];
 
   const defaultAccordionValue: string[] = Object.keys(expanded).reduce(
     (acc: string[], key: string) => {
@@ -78,7 +80,7 @@ const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
               defaultValue={defaultAccordionValue}
               className="space-y-2"
             >
-              {WorkspaceList.map((workspace: Workspace) => (
+              {mockData.map((workspace: Workspace) => (
                 <NavbarItem
                   key={workspace.id}
                   workspace={workspace}

@@ -1,0 +1,36 @@
+{
+  "User": {
+    "id": "123",
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "user@gmail.com",
+    "password": "XXXXXXXX",
+    "role": "Enum(admin, user)",
+    "Workspace": [
+      {
+        "Name": "Workspace name",
+        "Description": "Random desc",
+        "Members": ["user_email1", "user_email2"],
+        "Projects": [
+          {
+            "Name": "Workspace name",
+            "Description": "Random desc",
+            "Start_Date": "11-12-2003",
+            "End_Date": "11-12-2004",
+            "Members": ["user_email1", "user_email2"],
+            "Tasks": [
+              {
+                "Name": "Workspace name",
+                "Description": "Random desc",
+                "Start_Date": "11-12-2003",
+                "End_Date": "11-12-2004",
+                "stage": "Enum(todo, pending, done)",
+                "project_member_id": "2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

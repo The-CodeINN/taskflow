@@ -15,7 +15,7 @@ const MetricCard = ({ title, value, icon, iconClassName }: MetricCardProps) => {
   const IconComponent = icon as React.ComponentType<any>;
 
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
         <CardTitle className="space-y-3">
           {/* Render the dynamically created icon component with className */}

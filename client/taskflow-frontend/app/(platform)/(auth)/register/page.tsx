@@ -28,7 +28,7 @@ const registerFormSchema = z
       message: "Invalid email",
     }),
     password: z.string().min(8, {
-      message: "Password must be at least 8 characters and a number",
+      message: "Password must be at least 8 characters",
     }),
     confirmPassword: z
       .string()

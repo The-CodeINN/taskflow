@@ -22,7 +22,7 @@ const registerFormSchema = z.object({
     message: "Invalid email",
   }),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters and a number",
+    message: "Password must be at least 8 characters",
   }),
 });
 
@@ -105,7 +105,7 @@ const LoginPage = () => {
         <div className="text-white space-y-3">
           <h1 className="text-5xl font-bold">Sync tasks seamlessly,</h1>
           <h4 className="text-2xl">keeping your team on track!</h4>
-          <div className="w-[450px]">
+          <div className="w-[400px]">
             <Image
               src={"/add-task.svg"}
               alt="task"

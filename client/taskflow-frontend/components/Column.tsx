@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Button } from "./ui/button";
 
 const Column = ({ column, tasks, columnId }: any) => {
   const onClick = () => {};

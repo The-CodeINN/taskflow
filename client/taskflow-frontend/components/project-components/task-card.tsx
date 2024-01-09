@@ -5,11 +5,20 @@ interface TaskCardProps {
   title: string;
   description: string;
   projectTimeline: string;
+  onClick: () => void;
 }
 
-const TaskCard = ({ title, description, projectTimeline }: TaskCardProps) => {
+const TaskCard = ({
+  title,
+  description,
+  projectTimeline,
+  onClick,
+}: TaskCardProps) => {
   return (
-    <Card className="rounded-lg shadow-sm hover:shadow-md px-4 py-3 md:px-6 md:py-4 bg-[#F9FAFB] border-[#EAECF0]">
+    <Card
+      onClick={onClick}
+      className="rounded-lg shadow-sm hover:shadow-md px-4 py-3 md:px-6 md:py-5 bg-[#F9FAFB] border-[#EAECF0]"
+    >
       <div className="flex flex-row items-center justify-between">
         <div className="items-center flex space-x-6">
           <FolderOpenDot className="text-primary" size={25} />

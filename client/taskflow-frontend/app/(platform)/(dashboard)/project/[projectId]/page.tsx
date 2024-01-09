@@ -1,12 +1,10 @@
 "use client";
-import Header from "@/components/home-components/header";
+
 import MetricCard from "@/components/home-components/metric-card";
-import TaskCard from "@/components/home-components/task-card";
 import { ClipboardList, Layers3, ListTodo } from "lucide-react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const Column = dynamic(() => import("@/components/Column"), { ssr: false });
 
 type Task = {

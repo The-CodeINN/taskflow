@@ -1,5 +1,4 @@
-import exp from 'constants';
-import { create } from 'zustand';
+import { create } from "zustand";
 
 type MobileSidebarStore = {
   isOpen: boolean;

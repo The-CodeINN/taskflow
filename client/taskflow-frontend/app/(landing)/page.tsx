@@ -2,29 +2,34 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
 
 const LandingPage = () => {
   return (
     <div>
-      <section className=" flex flex-col-reverse sm:flex-row px-11 mt-11">
-        <div className="md:w-[60%] max-w-xl">
-          <div className="bg-white mt-10">
-            <Button className="bg-[#22304e] text-white px-12 mt-5 mx-auto rounded-l-[20px] rounded-r-[20px]">
-              Taskflow task manager is now public!
-            </Button>
+      <section className=" flex flex-col-reverse sm:flex-row px-11 py-28">
+        <div className="md:w-[60%] max-w-xl flex flex-col justify-center space-y-5">
+          <div className="bg-white pt-10 md:pt-0">
+            <Card className="bg-[#22304e] text-white rounded-full flex items-center justify-center py-3 lg:w-[70%] ">
+              <div>Taskflow task manager is now public!</div>
+            </Card>
           </div>
-          <h1 className="mt-3 sm:text-left text-4xl font-bold tracking-tight text-center">
+          <h1 className="sm:text-left text-4xl font-bold tracking-tight text-center">
             Manage your tasks efficiently and with ease.
           </h1>
-          <p className="mt-3 sm:text-left text-gray-900 text-center">
-            AIDe is your hard working 24/7 personal assistant, empowering you
-            with our blazingly fast dedicated AI analysis of any documents via a
-            chat interface. Easily upload your file and start getting answers
-            right away!
+          <p className="sm:text-left text-gray-900 text-center text-lg">
+            TaskFlow is not just a task scheduler; it&apos;s your personalized
+            productivity navigator. Say goodbye to chaotic to-do lists and hello
+            to a streamlined day ahead.
           </p>
-          <div className="mt-10">
-            <Button className="px-28 rounded-l-[20px] rounded-r-[20px] md:w-[45%]">
-              <Link href="/register">Start for free</Link>
+          <div className="">
+            <Button
+              asChild
+              className="px-28 rounded-l-[20px] rounded-r-[20px] md:w-[45%] py-6"
+            >
+              <Link className="text-lg font-bold" href="/register">
+                Start for free
+              </Link>
             </Button>
           </div>
         </div>
@@ -38,11 +43,11 @@ const LandingPage = () => {
           />
         </div>
       </section>
-      <div className="px-1">
-        <h1 className="text-center mt-20 text-5xl font-bold tracking-tight">
+      <div className="px-8">
+        <h1 className="text-center text-3xl md:text-5xl font-bold tracking-tight">
           Start managing tasks in a minute
         </h1>
-        <p className="text-center mt-3 px-3">
+        <p className="text-center mt-3 px-3 text-lg font-medium">
           With Taskflow, task and project management and has never been easier.
         </p>
         <div className="flex justify-center items-center">
@@ -51,7 +56,7 @@ const LandingPage = () => {
             alt="Illustration"
             width={850}
             height={500}
-            className=" sm:px-3 mt-10 max-w-full h-auto mb-5"
+            className="px-0 sm:px-3 mt-10 max-w-full h-auto mb-5"
           />
         </div>
       </div>

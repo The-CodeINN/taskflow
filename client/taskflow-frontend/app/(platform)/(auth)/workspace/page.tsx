@@ -10,17 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,32 +27,33 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-const createorgFormSchema = z.object({
-  nameofOrg: z
+const workspaceFormSchema = z.object({
+  nameofWorkspace: z
     .string()
     .min(2, {
-      message: "Organisation must be at least 2 characters.",
+      message: "Workspace name must be at least 2 characters.",
     })
     .max(160, {
-      message: "Organisation must not be longer than 30 characters.",
+      message: "Workspace must not be longer than 30 characters.",
     }),
-  email: z.string().email({
-    message: "Invalid email",
-  }),
-  role: z.string().refine((value) => value !== "", {
-    message: "You have to select a role",
-  }),
+  email: z
+    .string()
+    // .email({
+    //   message: "Invalid email",
+    // })
+    .refine((value) => value !== null, {
+      message: "Email is required",
+    }),
 });
 
-type FormValues = z.infer<typeof createorgFormSchema>;
+type FormValues = z.infer<typeof workspaceFormSchema>;
 
-const CreateOrg = () => {
-  const form = useForm<z.infer<typeof createorgFormSchema>>({
-    resolver: zodResolver(createorgFormSchema),
+const Workspace = () => {
+  const form = useForm<z.infer<typeof workspaceFormSchema>>({
+    resolver: zodResolver(workspaceFormSchema),
     defaultValues: {
-      nameofOrg: "",
+      nameofWorkspace: "",
       email: "",
-      role: "",
     },
   });
 
@@ -77,9 +69,7 @@ const CreateOrg = () => {
         <Card className=" bg-[#eaebf4] md:w-[50%] mt-10 mb-5">
           <div>
             <CardHeader>
-              <CardTitle className="font-bold">
-                Create your organisation
-              </CardTitle>
+              <CardTitle className="font-bold">Create your Workspace</CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -87,10 +77,10 @@ const CreateOrg = () => {
                   <div className="grid w-full items-center gap-4">
                     <FormField
                       control={form.control}
-                      name="nameofOrg"
+                      name="nameofWorkspace"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name of your organisation</FormLabel>
+                          <FormLabel>Name of your Workspace</FormLabel>
                           <FormControl>
                             <Input
                               type="text"
@@ -130,43 +120,13 @@ const CreateOrg = () => {
                           )}
                         />
                       </div>
-                      <div className="">
-                        <h2 className="text-1xl font-bold">Role</h2>
-                        <FormField
-                          control={form.control}
-                          name="role"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Role</FormLabel> */}
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Select an option" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Roles</SelectLabel>
-                                    <SelectItem value="Admin">Admin</SelectItem>
-                                    <SelectItem value="User">User</SelectItem>
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <CardFooter className="flex justify-between mt-3">
-                        <Button
+                      <CardFooter className="flex justify-end mt-3">
+                        {/* <Button
                           variant="outline"
                           onClick={(e) => e.preventDefault()}
                         >
                           Skip
-                        </Button>
+                        </Button> */}
                         <Button type="submit">SEND INVITATION</Button>
                       </CardFooter>
                     </div>
@@ -181,4 +141,4 @@ const CreateOrg = () => {
   );
 };
 
-export default CreateOrg;
+export default Workspace;

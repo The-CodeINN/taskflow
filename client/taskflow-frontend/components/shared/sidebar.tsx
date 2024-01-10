@@ -69,7 +69,7 @@ const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
               size="icon"
               variant="ghost"
             >
-              <Link href="/add-workflow">
+              <Link href="/create-workspace">
                 <Plus className="h-6 w-6" />
               </Link>
             </Button>

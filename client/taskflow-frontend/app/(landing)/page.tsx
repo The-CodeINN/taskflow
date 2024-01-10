@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 const LandingPage = () => {
   return (
@@ -10,8 +10,8 @@ const LandingPage = () => {
       <section className=" flex flex-col-reverse sm:flex-row px-11 py-28">
         <div className="md:w-[60%] max-w-xl flex flex-col justify-center space-y-5">
           <div className="bg-white pt-10 md:pt-0">
-            <Card className="bg-[#22304e] text-white rounded-full flex items-center justify-center py-3 lg:w-[70%] ">
-              <div>Taskflow task manager is now public!</div>
+            <Card className="bg-[#22304e] text-white rounded-full grid place-content-center py-2 md:py-3 lg:w-[70%]">
+              <div>Taskflow is now public!</div>
             </Card>
           </div>
           <h1 className="sm:text-left text-4xl font-bold tracking-tight text-center">
@@ -25,7 +25,7 @@ const LandingPage = () => {
           <div className="">
             <Button
               asChild
-              className="px-28 rounded-l-[20px] rounded-r-[20px] md:w-[45%] py-6"
+              className="md:px-28 w-full rounded-l-[20px] rounded-r-[20px] md:w-[45%] py-6"
             >
               <Link className="text-lg font-bold" href="/register">
                 Start for free

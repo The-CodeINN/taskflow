@@ -41,7 +41,7 @@ const ForgotPage = () => {
     <section className="flex bg-[#ffffff] justify-center">
       <div className="bg-[#ffffff] h-screen md:w-[60%] md:rounded-l-[20px] md:rounded-r-[20px] w-full">
         <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-         Forgot Password
+          Forgot Password
         </h2>
         {/* <p className=" md:invisible mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900 md: visible">
           Don&apos;t have an account?
@@ -59,7 +59,7 @@ const ForgotPage = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Registered email Address</FormLabel>
+                      <FormLabel>Registered Email Address</FormLabel>
                       <FormControl>
                         <Input type="email" disabled={isLoading} {...field} />
                       </FormControl>
@@ -91,14 +91,11 @@ const ForgotPage = () => {
                 </Button>
               </div>
               <p className="mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900">
-            Back to{" "}
-            <Link href="/login" className="text-[#2f46a5] underline">
-              Login
-            </Link>
-          </p>
-          
-            
-          
+                Back to{" "}
+                <Link href="/login" className="text-[#2f46a5] underline">
+                  Login
+                </Link>
+              </p>
             </form>
           </Form>
         </div>

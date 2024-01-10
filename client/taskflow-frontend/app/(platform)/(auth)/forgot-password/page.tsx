@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const ForgotFormSchema = z.object({
   email: z.string().email({
@@ -38,8 +39,8 @@ const ForgotPage = () => {
   };
 
   return (
-    <section className="flex bg-[#ffffff] justify-center">
-      <div className="bg-[#ffffff] h-screen md:w-[60%] md:rounded-l-[20px] md:rounded-r-[20px] w-full">
+    <section className="flex bg-[#ffffff] justify-between">
+      <div className="bg-[#ffffff] h-screen md:w-[90%] md:rounded-l-[20px] md:rounded-r-[20px] w-full flex flex-col justify-center">
         <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
           Forgot Password
         </h2>
@@ -59,7 +60,7 @@ const ForgotPage = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Registered Email Address</FormLabel>
+                      <FormLabel className="font-bold">Email Address</FormLabel>
                       <FormControl>
                         <Input type="email" disabled={isLoading} {...field} />
                       </FormControl>
@@ -100,21 +101,23 @@ const ForgotPage = () => {
           </Form>
         </div>
       </div>
-      {/* <div className=" bg-[#2f46a5] flex-col items-center w-[60%] hidden md:flex rounded-xl">
-        <div className="text-right w-[60%] mt-10 font-bold text-[#FFFFFF]  ">
-          <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-            Don&apos;t have an account?
-          </h2>
-          <p className="mt-9 text-center font-extralight text-[#000000] text-2xl ">
-            Sign up and start managing your task right now!
-          </p>
+      <div className=" bg-white flex-col items-center w-[60%] hidden md:flex rounded-xl justify-center">
+        <div className="text-white space-y-3">
+          {/* <h1 className="text-4xl font-bold">Optimize team workflow,</h1>
+          <h4 className="text-2xl text-center">
+            with seamless task coordination!
+          </h4> */}
+          <div className="w-[400px]">
+            <Image
+              src={"/forgot-password.png"}
+              alt="rest-password"
+              width={500}
+              height={500}
+              className="py-10 w-full"
+            />
+          </div>
         </div>
-        <div className="mt-10">
-          <Button className="w-full bg-[#3EACFB]" type="submit">
-            SIGN UP
-          </Button>
-        </div>
-      </div> */}
+      </div>
     </section>
   );
 };

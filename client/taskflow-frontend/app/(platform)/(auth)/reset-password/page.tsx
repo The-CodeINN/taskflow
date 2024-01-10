@@ -15,18 +15,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const ResetFormSchema = z.object({
-  newpassword: z.string().min(8, {
-    message: "New password must be at least 8 characters and a number",
-  }),
-  confirmPassword: z
-  .string()
-  .min(1, { message: "Confirm Password is required" }),
-})
-.refine((data) => data.newpassword === data.confirmPassword, {
-path: ["confirmPassword"],
-message: "Password don't match",
-});
+const ResetFormSchema = z
+  .object({
+    newpassword: z.string().min(8, {
+      message: "New password must be at least 8 characters",
+    }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: "Confirm Password is required" }),
+  })
+  .refine((data) => data.newpassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Password don't match",
+  });
 
 type ResetFormValues = z.infer<typeof ResetFormSchema>;
 
@@ -49,7 +50,7 @@ const ResetPage = () => {
     <section className="flex bg-[#ffffff] justify-center">
       <div className="bg-[#ffffff] h-screen md:w-[60%] md:rounded-l-[20px] md:rounded-r-[20px] w-full">
         <h2 className="mt-20 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-         Reset Password
+          Reset Password
         </h2>
         {/* <p className=" md:invisible mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900 md: visible">
           Don&apos;t have an account?
@@ -69,7 +70,11 @@ const ResetPage = () => {
                     <FormItem>
                       <FormLabel>New Password</FormLabel>
                       <FormControl>
-                        <Input type="password" disabled={isLoading} {...field} />
+                        <Input
+                          type="password"
+                          disabled={isLoading}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>

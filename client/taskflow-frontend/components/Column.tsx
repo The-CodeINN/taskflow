@@ -1,6 +1,36 @@
-import React from "react";
+"use client";
+
+import React, { Fragment, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Button } from "./ui/button";
+// import Modal from "./Modal";
+import Link from "next/link";
+import { Textarea } from "@/components/ui/textarea";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "lucide-react";
+import TaskCard from "./task-card";
 
 const Column = ({ column, tasks, columnId }: any) => {
   const onClick = () => {};
@@ -30,19 +60,21 @@ const Column = ({ column, tasks, columnId }: any) => {
                     >
                       {(draggableProvided, draggableSnapshot) => {
                         return (
-                          <Card
-                            className={`border text-black px-2 py-2 rounded-md ${
-                              draggableSnapshot.isDragging
-                              // ? "border-blue-600"
-                              // : "border-[#e3f2fa]"
-                            }`}
-                            onClick={() => console.log(task.content)}
-                            ref={draggableProvided.innerRef}
-                            {...draggableProvided.draggableProps}
-                            {...draggableProvided.dragHandleProps}
-                          >
-                            {task.content}
-                          </Card>
+                          <Dialog>
+                            <DialogTrigger>
+                              <Card
+                                className={`border text-black px-2 py-2 rounded-md ${draggableSnapshot.isDragging}`}
+                                ref={draggableProvided.innerRef}
+                                {...draggableProvided.draggableProps}
+                                {...draggableProvided.dragHandleProps}
+                              >
+                                {task.content}
+                              </Card>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <TaskCard />
+                            </DialogContent>
+                          </Dialog>
                         );
                       }}
                     </Draggable>

@@ -10,9 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-// import { toast } from "sonner";
-
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,6 +25,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
 
 const workspaceFormSchema = z.object({
   nameofWorkspace: z
@@ -49,6 +49,8 @@ const workspaceFormSchema = z.object({
 type FormValues = z.infer<typeof workspaceFormSchema>;
 
 const Workspace = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof workspaceFormSchema>>({
     resolver: zodResolver(workspaceFormSchema),
     defaultValues: {
@@ -61,6 +63,8 @@ const Workspace = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+    toast.success("Workspace created successfully");
+    router.push("/workspace/1");
   };
 
   return (
@@ -121,12 +125,6 @@ const Workspace = () => {
                         />
                       </div>
                       <CardFooter className="flex justify-end mt-3">
-                        {/* <Button
-                          variant="outline"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Skip
-                        </Button> */}
                         <Button type="submit">SEND INVITATION</Button>
                       </CardFooter>
                     </div>

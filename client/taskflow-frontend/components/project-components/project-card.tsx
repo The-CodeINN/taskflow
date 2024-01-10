@@ -1,19 +1,27 @@
+"use client";
+
 import { FolderOpenDot, MoreHorizontal } from "lucide-react";
 import { Card } from "../ui/card";
+import { useRouter } from "next/navigation";
 
 interface TaskCardProps {
+  projectId: string;
   title: string;
   description: string;
   projectTimeline: string;
-  onClick: () => void;
 }
 
 const ProjectCard = ({
+  projectId,
   title,
   description,
   projectTimeline,
-  onClick,
 }: TaskCardProps) => {
+  const router = useRouter();
+  const handleProjectClick = () => {
+    router.push(`/project/${projectId}`);
+  };
+
   return (
     <Card className="rounded-lg shadow-sm hover:shadow-md p-4 md:p-6 bg-[#F9FAFB] border-[#EAECF0]">
       <div className="grid grid-cols-3 gap-4 items-center justify-between">
@@ -28,7 +36,7 @@ const ProjectCard = ({
           Project Timeline - {projectTimeline}
         </div>
         <div className="text-primary cursor-pointer md:col-span-1 flex justify-end">
-          <MoreHorizontal onClick={onClick} size={25} />
+          <MoreHorizontal onClick={handleProjectClick} size={25} />
         </div>
       </div>
     </Card>

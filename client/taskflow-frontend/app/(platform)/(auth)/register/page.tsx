@@ -63,7 +63,7 @@ const RegisterPage = () => {
     const { confirmPassword, ...dataWithoutConfirmPassword } = data;
     console.log(dataWithoutConfirmPassword);
     toast.success("Registered successfully");
-    router.push("/createOrg");
+    router.push("/create-workspace");
   };
 
   return (

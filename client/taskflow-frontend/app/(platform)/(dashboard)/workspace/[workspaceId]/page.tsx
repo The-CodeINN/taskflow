@@ -1,25 +1,28 @@
-"use client";
-
-import Header from "@/components/home-components/header";
+import Header from "@/components/workspace-components/header";
 import ProjectCard from "@/components/project-components/project-card";
 import { getProjectsByWorkspaceId } from "@/db/mock.json";
-import { useRouter } from "next/navigation";
 
-const WorkspaceIdPage = ({ params }: { params: { workspaceId: string } }) => {
-  const router = useRouter();
-  const handleTaskCardClick = (projectId: string) => {
-    router.push(`/project/${projectId}`);
+type WorkspaceIdPageProps = {
+  params: { workspaceId: string };
+};
+
+export async function generateMetadata({ params }: WorkspaceIdPageProps) {
+  return {
+    title: `Workspace ${params.workspaceId}`,
+    description: `Welcome to your workspace ${params.workspaceId}`,
   };
+}
+
+const WorkspaceIdPage = ({ params }: WorkspaceIdPageProps) => {
   return (
     <>
       <Header />
       <div className="flex flex-col gap-5">
         <h1 className="font-medium text-muted-foreground">My Projects</h1>
         {getProjectsByWorkspaceId(params?.workspaceId)?.map((project) => (
-          // <li key={project.id}>{project.name}</li>
           <div key={project.id}>
             <ProjectCard
-              onClick={() => handleTaskCardClick(project.id)}
+              projectId={project.id}
               title={project.name}
               description={project.description}
               projectTimeline={`${project.startDate} - ${project.endDate}`}

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { Fragment, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 // import Modal from "./Modal";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";

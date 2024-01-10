@@ -32,6 +32,8 @@ const ForgotPage = () => {
   });
 
   const isLoading = form.formState.isSubmitting;
+  const formError = form.formState.errors;
+  console.log(formError);
 
   const onSubmit = (data: ForgotFormValues) => {
     console.log(data);

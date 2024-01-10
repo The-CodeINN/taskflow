@@ -35,7 +35,7 @@ const TaskCard = () => {
             className="h-[30%] bg-[#191950] w-full font-light  hover:bg-gray-400"
           >
             <Pencil />
-            Update
+            Edit
           </Button>
           <Button
             type="submit"

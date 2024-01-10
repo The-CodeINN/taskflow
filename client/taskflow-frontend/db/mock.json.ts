@@ -3,19 +3,18 @@ import { Mockdata } from "@/@types";
 export const mockData: Mockdata[] = [
   {
     id: "1",
-    name: "Richard Workspace",
+    name: "Richard's Workspace",
     projects: [
       {
         id: "1",
-        name: "Project Microsoft",
-        description:
-          "A project designed for engineers in the text-based team to collaborate with team members",
+        name: "Quiz Game",
+        description: "Design a simple quiz game for children below 18 years",
         startDate: "2023-01-01",
         endDate: "2023-09-31",
       },
       {
         id: "2",
-        name: "Project Flutter",
+        name: "Employee Management",
         description: "Project Microsoft is for me",
         startDate: "2023-01-01",
         endDate: "2023-09-31",
@@ -24,11 +23,11 @@ export const mockData: Mockdata[] = [
   },
   {
     id: "2",
-    name: "Workspace 2",
+    name: "Jerry's Workspace",
     projects: [
       {
         id: "1",
-        name: "Project Todo",
+        name: "Task Scheduler",
         description: "Project Microsoft is for me",
         startDate: "2023-01-01",
         endDate: "2023-09-31",

@@ -92,6 +92,9 @@ const LoginPage = () => {
                   )}
                 />
               </div>
+              <div className="flex justify-end font-semibold text-primary hover:text-indigo-500">
+                <Link href="/forgot-password">Forgot password?</Link>
+              </div>
               <div className=" py-10">
                 <Button className="w-full" type="submit">
                   LOG IN
@@ -103,8 +106,10 @@ const LoginPage = () => {
       </div>
       <div className=" bg-primary flex-col items-center w-[60%] hidden md:flex rounded-xl justify-center">
         <div className="text-white space-y-3">
-          <h1 className="text-5xl font-bold">Sync tasks seamlessly,</h1>
-          <h4 className="text-2xl">keeping your team on track!</h4>
+          <h1 className="text-4xl font-bold">Optimize team workflow,</h1>
+          <h4 className="text-2xl text-center">
+            with seamless task coordination!
+          </h4>
           <div className="w-[400px]">
             <Image
               src={"/add-task.svg"}

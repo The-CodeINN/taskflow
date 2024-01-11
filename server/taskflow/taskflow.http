@@ -1,6 +1,0 @@
-@taskflow_HostAddress = http://localhost:5281
-
-GET {{taskflow_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

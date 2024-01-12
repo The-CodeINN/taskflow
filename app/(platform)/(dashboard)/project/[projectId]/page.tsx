@@ -141,7 +141,7 @@ const ProjectIdPage = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <section>
-          <div className="grid md:grid-cols-3 gap-4 text-center">
+          <div className="grid md:grid-cols-3 gap-4">
             <MetricCard
               title="Total Projects"
               value="4"

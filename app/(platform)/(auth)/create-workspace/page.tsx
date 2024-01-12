@@ -36,14 +36,7 @@ const workspaceFormSchema = z.object({
     .max(160, {
       message: "Workspace must not be longer than 30 characters.",
     }),
-  email: z
-    .string()
-    // .email({
-    //   message: "Invalid email",
-    // })
-    .refine((value) => value !== null, {
-      message: "Email is required",
-    }),
+  email: z.string().email().or(z.undefined()),
 });
 
 type FormValues = z.infer<typeof workspaceFormSchema>;
@@ -55,7 +48,6 @@ const Workspace = () => {
     resolver: zodResolver(workspaceFormSchema),
     defaultValues: {
       nameofWorkspace: "",
-      email: "",
     },
   });
 
@@ -116,7 +108,6 @@ const Workspace = () => {
                                   disabled={isLoading}
                                   {...field}
                                   placeholder="Enter your email address here"
-                                  typeof="email"
                                 />
                               </FormControl>
                               <FormMessage className="text-xs" />
@@ -125,7 +116,7 @@ const Workspace = () => {
                         />
                       </div>
                       <CardFooter className="flex justify-end mt-3">
-                        <Button type="submit">SEND INVITATION</Button>
+                        <Button type="submit">DONE</Button>
                       </CardFooter>
                     </div>
                   </div>

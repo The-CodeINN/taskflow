@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import {
   Form,
   FormControl,
@@ -11,19 +11,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const registerFormSchema = z.object({
   email: z.string().email({
-    message: "Invalid email",
+    message: 'Invalid email',
   }),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters",
+    message: 'Password must be at least 8 characters',
   }),
 });
 
@@ -31,11 +31,11 @@ type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const LoginPage = () => {
   const router = useRouter();
-  const form = useForm<z.infer<typeof registerFormSchema>>({
+  const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -43,65 +43,65 @@ const LoginPage = () => {
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
-    toast.success("Login successful");
+    toast.success('Login successful');
     setTimeout(() => {
       router.push(`workspace/${1}`);
     }, 1000);
   };
 
   return (
-    <section className="flex bg-[#ffffff] justify-between ">
-      <div className="bg-white h-screen md:w-[60%] md:rounded-l-[20px] w-full flex flex-col justify-center">
-        <h2 className="mt-20 text-center text-3xl md:text-4xl font-bold leading-9 tracking-tight text-gray-900">
+    <section className='flex bg-[#ffffff] justify-between '>
+      <div className='bg-white h-screen md:w-[60%] md:rounded-l-[20px] w-full flex flex-col justify-center'>
+        <h2 className='mt-20 text-center text-3xl md:text-4xl font-bold leading-9 tracking-tight text-gray-900'>
           Login to your account
         </h2>
-        <p className="mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900 md: visible">
+        <p className='mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900 md: visible'>
           Don&apos;t have an account?
-          <Link href="/register" className="text-primary underline ml-1">
+          <Link href='/register' className='text-primary underline ml-1'>
             Sign up
           </Link>
         </p>
 
-        <div className="px-12 md:px-28">
+        <div className='px-12 md:px-28'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid md:py-5">
+              <div className='grid md:py-5'>
                 <FormField
                   control={form.control}
-                  name="email"
+                  name='email'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
-                        <Input type="email" disabled={isLoading} {...field} />
+                        <Input type='email' disabled={isLoading} {...field} />
                       </FormControl>
-                      <FormMessage className="text-xs" />
+                      <FormMessage className='text-xs' />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="password"
+                  name='password'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
+                          type='password'
                           disabled={isLoading}
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-xs" />
+                      <FormMessage className='text-xs' />
                     </FormItem>
                   )}
                 />
               </div>
-              <div className="flex justify-end font-semibold text-primary hover:text-indigo-500">
-                <Link href="/forgot-password">Forgot password?</Link>
+              <div className='flex justify-end font-semibold text-primary hover:text-indigo-500'>
+                <Link href='/forgot-password'>Forgot password?</Link>
               </div>
-              <div className=" py-10">
-                <Button className="w-full" type="submit">
+              <div className=' py-10'>
+                <Button className='w-full' type='submit'>
                   LOG IN
                 </Button>
               </div>
@@ -109,19 +109,19 @@ const LoginPage = () => {
           </Form>
         </div>
       </div>
-      <div className=" bg-primary flex-col items-center w-[60%] hidden md:flex rounded-xl justify-center">
-        <div className="text-white space-y-3">
-          <h1 className="text-4xl font-bold">Optimize team workflow,</h1>
-          <h4 className="text-2xl text-center">
+      <div className=' bg-primary flex-col items-center w-[60%] hidden md:flex rounded-xl justify-center'>
+        <div className='text-white space-y-3'>
+          <h1 className='text-4xl font-bold'>Optimize team workflow,</h1>
+          <h4 className='text-2xl text-center'>
             with seamless task coordination!
           </h4>
-          <div className="w-[400px]">
+          <div className='w-[400px]'>
             <Image
-              src={"/add-task.svg"}
-              alt="task"
+              src={'/add-task.svg'}
+              alt='task'
               width={500}
               height={500}
-              className="py-10 w-full"
+              className='py-10 w-full'
             />
           </div>
         </div>

@@ -60,7 +60,7 @@ const Workspace = () => {
   };
 
   return (
-    <div className=" bg-[#2f46a5] min-h-screen">
+    <div className=" bg-[url('/workspacebg5.jpg')] bg-no-repeat bg-fixed bg-cover min-h-screen">
       <section className="flex items-center justify-center py-20 md:py-0 ">
         <Card className=" bg-[#eaebf4] md:w-[50%] mt-10 mb-5">
           <div>
@@ -116,7 +116,7 @@ const Workspace = () => {
                         />
                       </div>
                       <CardFooter className="flex justify-end mt-3">
-                        <Button type="submit">DONE</Button>
+                        <Button className="text-white bg-sky-950" type="submit">DONE</Button>
                       </CardFooter>
                     </div>
                   </div>

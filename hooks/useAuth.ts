@@ -1,6 +1,9 @@
 'use client';
 
-import AuthService, { LoginRequest, RegisterRequest } from '@/interfaces';
+import AuthService, {
+  LoginRequest,
+  RegisterRequest,
+} from '@/services/authService';
 import { useAuthState } from '@/store/authStore';
 import axiosResponseMessage from '@/lib/axiosResponseMessage';
 import { useMutation } from '@tanstack/react-query';
@@ -15,7 +18,7 @@ const useAuth = () => {
   const signUpMutation = useMutation({
     mutationFn: async (user: RegisterRequest) => {
       const response = await AuthService.register(user);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     },
     onError: (error: AxiosError) => {
@@ -24,7 +27,7 @@ const useAuth = () => {
     },
     onSuccess: (data) => {
       const { status, data: responseData } = data;
-      console.log(responseData);
+      // console.log(responseData);
       toast.success(status);
       // setUser(responseData.user);
       // setToken(responseData.jwtToken);
@@ -43,7 +46,7 @@ const useAuth = () => {
     },
     onSuccess: (data) => {
       const { status, data: responseData } = data;
-      console.log(responseData);
+      // console.log(responseData);
       toast.success(status);
       setUser(responseData.user);
       setToken(responseData.jwtToken);

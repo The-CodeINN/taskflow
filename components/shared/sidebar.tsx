@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { LogOut, Plus } from "lucide-react";
-import { useLocalStorage } from "usehooks-ts";
-import Logo from "./logo";
-import { Button } from "../ui/button";
-import { Accordion } from "../ui/accordion";
-import { NavbarItem } from "./navbar-item";
-import { cn } from "@/lib/utils";
-import { Workspace } from "@/@types";
-import { mockData } from "@/db/mock.json";
+import Link from 'next/link';
+import { LogOut, Plus } from 'lucide-react';
+import { useLocalStorage } from 'usehooks-ts';
+import Logo from './logo';
+import { Button } from '../ui/button';
+import { Accordion } from '../ui/accordion';
+import { NavbarItem } from './navbar-item';
+import { cn } from '@/lib/utils';
+import { Workspace } from '@/@types';
+import { mockData } from '@/db/mock.json';
+import useAuth from '@/hooks/useAuth';
 
 interface SidebarProps {
   storageKey?: string;
@@ -30,7 +31,9 @@ interface SidebarProps {
 //   },
 // ];
 
-const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
+const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
+  const { logOut } = useAuth();
+
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
     {}
@@ -56,29 +59,29 @@ const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
 
   return (
     <>
-      <div className="flex flex-col h-full">
-        <div className="px-3 py-10 flex-1 bg-primary md:rounded-r-lg">
-          <div className="flex items-center justify-between mb-6 lg:mb-14 ">
-            <div className="">
+      <div className='flex flex-col h-full'>
+        <div className='px-3 py-10 flex-1 bg-primary md:rounded-r-lg'>
+          <div className='flex items-center justify-between mb-6 lg:mb-14 '>
+            <div className=''>
               <Logo />
             </div>
             <Button
-              className="p"
+              className='p'
               asChild
-              type="button"
-              size="icon"
-              variant="ghost"
+              type='button'
+              size='icon'
+              variant='ghost'
             >
-              <Link href="/create-workspace">
-                <Plus className="h-6 w-6" />
+              <Link href='/create-workspace'>
+                <Plus className='h-6 w-6' />
               </Link>
             </Button>
           </div>
-          <div className="flex flex-col justify-between h-[75dvh] pt-10">
+          <div className='flex flex-col justify-between h-[75dvh] pt-10'>
             <Accordion
-              type="multiple"
+              type='multiple'
               defaultValue={defaultAccordionValue}
-              className="space-y-2"
+              className='space-y-2'
             >
               {mockData.map((workspace: Workspace) => (
                 <NavbarItem
@@ -86,20 +89,21 @@ const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
                   workspace={workspace}
                   onExpand={onExpand}
                   isExpanded={expanded[workspace.id]}
-                  isActive={workspace.id === "1"}
+                  isActive={workspace.id === '1'}
                 />
               ))}
             </Accordion>
-            <div className="space-y-2">
-              <Link
-                href="/"
-                className="text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition text-white bg-none hover:bg-white/10 items-center"
+            <div className='space-y-2'>
+              <Button
+                variant={'ghost'}
+                onClick={logOut}
+                className='text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition text-white bg-none hover:bg-white/10 items-center'
               >
-                <LogOut className={cn("h-5 w-5 mr-3 text-xl")} />
-                <span className="flex items-center flex-1 text-lg lg:text-xl">
+                <LogOut className={cn('h-5 w-5 mr-3 text-xl')} />
+                <span className='flex items-center flex-1 text-lg lg:text-xl'>
                   Logout
                 </span>
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

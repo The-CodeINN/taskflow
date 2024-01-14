@@ -17,10 +17,10 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import axiosConfig from '@/config/axios';
+import useAuth from '@/hooks/useAuth';
 
-const LoginFormSchema = z.object({
-  email: z.string().email({
+const registerFormSchema = z.object({
+  username: z.string().email({
     message: 'Invalid email',
   }),
   password: z.string().min(8, {
@@ -28,33 +28,28 @@ const LoginFormSchema = z.object({
   }),
 });
 
-type LoginFormValues = z.infer<typeof LoginFormSchema>;
+type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const LoginPage = () => {
+  const { loginMutation } = useAuth();
   const router = useRouter();
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(LoginFormSchema),
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async(data: LoginFormValues) => {
-    try{
-  const payload = {...data, username:data.email, email:undefined}
-  const response = await axiosConfig.post("Auth/Login", payload )   
-  localStorage.setItem("jwtToken", response.data.data.jwtToken)
-    console.log(response);
-    toast.success('Login successful');
-    setTimeout(() => {
-      router.push(`workspace/${1}`);
-    }, 1000);
-     }catch(err){
-  toast.error("Invalid Login Details")
-     }
+  const onSubmit = (data: RegisterFormValues) => {
+    console.log(data);
+    // toast.success('Login successful');
+    // setTimeout(() => {
+    //   router.push(`workspace/${1}`);
+    // }, 1000);
+    loginMutation.mutate(data);
   };
 
   return (
@@ -76,7 +71,7 @@ const LoginPage = () => {
               <div className='grid md:py-5'>
                 <FormField
                   control={form.control}
-                  name='email'
+                  name='username'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>

@@ -17,9 +17,10 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import useAuth from '@/hooks/useAuth';
 
 const registerFormSchema = z.object({
-  email: z.string().email({
+  username: z.string().email({
     message: 'Invalid email',
   }),
   password: z.string().min(8, {
@@ -30,11 +31,12 @@ const registerFormSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const LoginPage = () => {
+  const { loginMutation } = useAuth();
   const router = useRouter();
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
@@ -43,10 +45,11 @@ const LoginPage = () => {
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
-    toast.success('Login successful');
-    setTimeout(() => {
-      router.push(`workspace/${1}`);
-    }, 1000);
+    // toast.success('Login successful');
+    // setTimeout(() => {
+    //   router.push(`workspace/${1}`);
+    // }, 1000);
+    loginMutation.mutate(data);
   };
 
   return (
@@ -68,7 +71,7 @@ const LoginPage = () => {
               <div className='grid md:py-5'>
                 <FormField
                   control={form.control}
-                  name='email'
+                  name='username'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>

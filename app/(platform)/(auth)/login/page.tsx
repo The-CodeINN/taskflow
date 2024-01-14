@@ -17,8 +17,9 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import axiosConfig from '@/config/axios';
 
-const registerFormSchema = z.object({
+const LoginFormSchema = z.object({
   email: z.string().email({
     message: 'Invalid email',
   }),
@@ -27,12 +28,12 @@ const registerFormSchema = z.object({
   }),
 });
 
-type RegisterFormValues = z.infer<typeof registerFormSchema>;
+type LoginFormValues = z.infer<typeof LoginFormSchema>;
 
 const LoginPage = () => {
   const router = useRouter();
-  const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerFormSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -41,12 +42,19 @@ const LoginPage = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (data: RegisterFormValues) => {
-    console.log(data);
+  const onSubmit = async(data: LoginFormValues) => {
+    try{
+  const payload = {...data, username:data.email, email:undefined}
+  const response = await axiosConfig.post("Auth/Login", payload )   
+  localStorage.setItem("jwtToken", response.data.data.jwtToken)
+    console.log(response);
     toast.success('Login successful');
     setTimeout(() => {
       router.push(`workspace/${1}`);
     }, 1000);
+     }catch(err){
+  toast.error("Invalid Login Details")
+     }
   };
 
   return (

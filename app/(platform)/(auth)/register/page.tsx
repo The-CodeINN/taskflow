@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
+import axiosConfig from '@/config/axios';
 
 const registerFormSchema = z
   .object({
@@ -59,11 +59,17 @@ const RegisterPage = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (data: RegisterFormValues) => {
-    const { confirmPassword, ...dataWithoutConfirmPassword } = data;
+  const onSubmit = async(data: RegisterFormValues) => {
+   try{ const { confirmPassword, ...dataWithoutConfirmPassword } = data; 
     console.log(dataWithoutConfirmPassword);
+    const payload = {...dataWithoutConfirmPassword, username:data.email}
+    const response = await axiosConfig.post("Auth/register", payload )
+    console.log(response);
     toast.success("Registered successfully");
     router.push("/create-workspace");
+     } catch (err){
+      toast.error("baba sign up now")
+     }
   };
 
   return (

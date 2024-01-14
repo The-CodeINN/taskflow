@@ -69,7 +69,7 @@ const ResetPage = () => {
                   name="newpassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold">New Password</FormLabel>
+                      <FormLabel className="font-normal">New Password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -86,7 +86,7 @@ const ResetPage = () => {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold">
+                      <FormLabel className="font-normal">
                         Confirm New Password
                       </FormLabel>
                       <FormControl>

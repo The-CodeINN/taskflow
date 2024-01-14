@@ -62,7 +62,7 @@ const ForgotPage = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold">Email Address</FormLabel>
+                      <FormLabel className="font-normal">Email Address</FormLabel>
                       <FormControl>
                         <Input type="email" disabled={isLoading} {...field} />
                       </FormControl>

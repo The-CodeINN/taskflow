@@ -65,14 +65,9 @@ const RegisterPage = () => {
     const { confirmPassword, ...dataWithoutConfirmPassword } = data;
 
     console.log(dataWithoutConfirmPassword);
-    const payload = {...dataWithoutConfirmPassword, username:data.email}
-    const response = await axiosConfig.post("auth/register", payload )
-    console.log(response);
-    toast.success("Registered successfully");
-    router.push("/create-workspace");
-     } catch (err){
-     console.log(err)
-     }
+    // toast.success("Registered successfully");
+    // router.push("/create-workspace");
+    signUpMutation.mutate(dataWithoutConfirmPassword);
   };
 
   return (

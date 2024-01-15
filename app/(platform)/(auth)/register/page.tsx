@@ -63,12 +63,12 @@ const RegisterPage = () => {
    try{ const { confirmPassword, ...dataWithoutConfirmPassword } = data; 
     console.log(dataWithoutConfirmPassword);
     const payload = {...dataWithoutConfirmPassword, username:data.email}
-    const response = await axiosConfig.post("Auth/register", payload )
+    const response = await axiosConfig.post("auth/register", payload )
     console.log(response);
     toast.success("Registered successfully");
     router.push("/create-workspace");
      } catch (err){
-      toast.error("baba sign up now")
+     console.log(err)
      }
   };
 

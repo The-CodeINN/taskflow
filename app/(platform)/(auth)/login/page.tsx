@@ -45,7 +45,7 @@ const LoginPage = () => {
   const onSubmit = async(data: LoginFormValues) => {
     try{
   const payload = {...data, username:data.email, email:undefined}
-  const response = await axiosConfig.post("Auth/Login", payload )   
+  const response = await axiosConfig.post("auth/login", payload )   
   localStorage.setItem("jwtToken", response.data.data.jwtToken)
     console.log(response);
     toast.success('Login successful');

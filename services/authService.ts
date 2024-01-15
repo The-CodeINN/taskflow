@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 
 export interface RegisterResponse {
   status: string;
-  data: ResponseData;
+  message: string;
 }
 
 export interface LoginResponse {

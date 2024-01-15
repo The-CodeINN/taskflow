@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -16,8 +15,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { toast } from 'sonner';
 import useAuth from '@/hooks/useAuth';
+import { Loader2 } from 'lucide-react';
+import { AuthDialog } from './auth-alert';
+import { useState } from 'react';
 
 const registerFormSchema = z
   .object({
@@ -45,8 +46,14 @@ const registerFormSchema = z
 type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const RegisterPage = () => {
-  const router = useRouter();
-  const { signUpMutation } = useAuth();
+  const { SignUpMutation } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [registrationResult, setRegistrationResult] = useState<{
+    status?: string;
+    message?: string;
+  }>({});
+
+  const signUpMutation = SignUpMutation((bool: boolean) => setIsOpen(bool));
 
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
@@ -59,15 +66,17 @@ const RegisterPage = () => {
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = signUpMutation.isPending;
 
-  const onSubmit = (data: RegisterFormValues) => {
+  const onSubmit = async (data: RegisterFormValues) => {
     const { confirmPassword, ...dataWithoutConfirmPassword } = data;
+    const mutationResult = await signUpMutation.mutateAsync(
+      dataWithoutConfirmPassword
+    );
 
-    console.log(dataWithoutConfirmPassword);
-    // toast.success("Registered successfully");
-    // router.push("/create-workspace");
-    signUpMutation.mutate(dataWithoutConfirmPassword);
+    // console.log(mutationResult?.status);
+    setRegistrationResult(mutationResult);
+    form.reset();
   };
 
   return (
@@ -94,7 +103,7 @@ const RegisterPage = () => {
           </h2>
           <p className='mt-1 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900'>
             Already have an account?
-            <Link href='/login' className='text-primary underline'>
+            <Link href='/login' className='text-primary underline ml-1'>
               Login
             </Link>
           </p>
@@ -182,12 +191,28 @@ const RegisterPage = () => {
                   />
                 </div>
                 <div className=' py-10'>
-                  <Button className='w-full py-6' type='submit'>
-                    Create my account
+                  <Button
+                    disabled={isLoading}
+                    className='w-full py-6'
+                    type='submit'
+                  >
+                    {isLoading ? (
+                      <div className='flex gap-2 items-center'>
+                        Loading <Loader2 className=' animate-spin' />
+                      </div>
+                    ) : (
+                      'Create my account'
+                    )}
                   </Button>
                 </div>
               </form>
             </Form>
+            <AuthDialog
+              title={registrationResult?.status}
+              description={registrationResult?.message}
+              open={isOpen}
+              onOpenChange={() => setIsOpen(!isOpen)}
+            />
           </div>
         </div>
       </section>

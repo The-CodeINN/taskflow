@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Logo from './logo';
 import MobileSidebar from './mobile-sidebar';
@@ -17,14 +19,20 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import useAuth from '@/hooks/useAuth';
 
 const DashboardNavbar = () => {
+  const { GetCurrentUser } = useAuth();
+  const user = GetCurrentUser();
+  console.log(user?.data);
+  console.log(user?.data?.firstName);
+
   return (
     <nav className='flex items-center px-8 py-4 border-b-2 border-gray-300'>
       <MobileSidebar />
       <div className='flex justify-end items-center w-full'>
         <div className='flex items-center gap-4'>
-          <Bell className='cursor-pointer hidden md:flex' size={24} />
+          <Bell className='cursor-pointer hidden lg:flex' size={24} />
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar className='cursor-pointer'>
@@ -65,7 +73,10 @@ const DashboardNavbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <div>
-            <p className='text-sm font-semibold'>Jerry Abadi</p>
+            <p className='text-sm font-semibold'>
+              {/* Jerry Abadi */}
+              {user?.data?.firstName}
+            </p>
             <p className='text-xs text-gray-500'>Member</p>
           </div>
         </div>

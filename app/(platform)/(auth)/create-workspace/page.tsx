@@ -26,6 +26,7 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
+import useWorkspaces from '@/hooks/useWorkspace';
 
 const workspaceFormSchema = z.object({
   nameofWorkspace: z
@@ -43,6 +44,7 @@ type FormValues = z.infer<typeof workspaceFormSchema>;
 
 const Workspace = () => {
   const router = useRouter();
+  const { createWorkspaceMutation } = useWorkspaces();
 
   const form = useForm<z.infer<typeof workspaceFormSchema>>({
     resolver: zodResolver(workspaceFormSchema),
@@ -55,8 +57,9 @@ const Workspace = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    toast.success('Workspace created successfully');
-    router.push('/workspace/1');
+    // createWorkspaceMutation.mutate(data);
+    // toast.success('Workspace created successfully');
+    // router.push('/workspace/1');
   };
 
   return (

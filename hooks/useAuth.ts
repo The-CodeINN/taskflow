@@ -6,7 +6,7 @@ import AuthService, {
 } from '@/services/authService';
 import { useAuthState } from '@/store/authStore';
 import axiosResponseMessage from '@/lib/axiosResponseMessage';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -62,7 +62,21 @@ const useAuth = () => {
     router.push('/login');
   };
 
-  return { SignUpMutation, loginMutation, user, token, logOut };
+  const GetCurrentUser = () =>
+    useQuery({
+      queryKey: ['user'],
+      queryFn: async () => {
+        try {
+          const response = await AuthService.getCurrentUser();
+          return response?.data;
+        } catch (error) {
+          console.log(error);
+          toast.error(error as string);
+        }
+      },
+    });
+
+  return { SignUpMutation, loginMutation, user, token, logOut, GetCurrentUser };
 };
 
 export default useAuth;

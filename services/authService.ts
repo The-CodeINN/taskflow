@@ -1,6 +1,5 @@
 import axiosConfig from '@/config/axios';
 import { AxiosResponse } from 'axios';
-import { request } from 'http';
 
 export interface RegisterResponse {
   status: string;
@@ -40,22 +39,6 @@ export interface User {
   updatedAt: string;
 }
 
-// export interface ForgotPasswordRequest {
-//   username: string;
-// }
-
-// export interface ForgotPasswordResponse {
-//   status: string;
-//   message: string;
-// }
-
-// export interface ResetPasswordRequest {
-//   username: string;
-//   token: string;
-//   NewPassword: string;
-//   ConfirmPassword: string;
-// }
-
 class AuthService {
   static register = async (
     requestBody: RegisterRequest
@@ -69,7 +52,9 @@ class AuthService {
     return await axiosConfig.post('auth/login', requestBody);
   };
 
-  
+  static getCurrentUser = async (): Promise<AxiosResponse<User>> => {
+    return await axiosConfig.get('auth/me');
+  };
 }
 
 export default AuthService;

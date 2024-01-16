@@ -68,7 +68,7 @@ const useAuth = () => {
       queryFn: async () => {
         try {
           const response = await AuthService.getCurrentUser();
-          return response?.data;
+          return response?.data?.data;
         } catch (error) {
           console.log(error);
           toast.error(error as string);

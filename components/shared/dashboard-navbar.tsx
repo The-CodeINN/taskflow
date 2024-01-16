@@ -24,7 +24,7 @@ import useAuth from '@/hooks/useAuth';
 const DashboardNavbar = () => {
   const { GetCurrentUser } = useAuth();
   const user = GetCurrentUser();
-  console.log(user?.data);
+  console.log(user);
   console.log(user?.data?.firstName);
 
   return (
@@ -75,7 +75,7 @@ const DashboardNavbar = () => {
           <div>
             <p className='text-sm font-semibold'>
               {/* Jerry Abadi */}
-              {user?.data?.firstName}
+              {`${user?.data?.firstName} ${user?.data?.lastName}`}
             </p>
             <p className='text-xs text-gray-500'>Member</p>
           </div>

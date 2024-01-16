@@ -39,6 +39,11 @@ export interface User {
   updatedAt: string;
 }
 
+export interface UserResponse {
+  status: string;
+  data: User;
+}
+
 class AuthService {
   static register = async (
     requestBody: RegisterRequest
@@ -52,7 +57,7 @@ class AuthService {
     return await axiosConfig.post('auth/login', requestBody);
   };
 
-  static getCurrentUser = async (): Promise<AxiosResponse<User>> => {
+  static getCurrentUser = async (): Promise<AxiosResponse<UserResponse>> => {
     return await axiosConfig.get('auth/me');
   };
 }

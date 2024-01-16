@@ -1,5 +1,5 @@
 import ProtectedRoute from '@/components/shared/Protected';
-import DashboardNavbar from '@/components/shared/dasboard-navbar';
+import DashboardNavbar from '@/components/shared/dashboard-navbar';
 import Sidebar from '@/components/shared/sidebar';
 import React from 'react';
 

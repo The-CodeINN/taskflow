@@ -40,21 +40,21 @@ export interface User {
   updatedAt: string;
 }
 
-export interface ForgotPasswordRequest {
-  username: string;
-}
+// export interface ForgotPasswordRequest {
+//   username: string;
+// }
 
-export interface ForgotPasswordResponse {
-  status: string;
-  message: string;
-}
+// export interface ForgotPasswordResponse {
+//   status: string;
+//   message: string;
+// }
 
-export interface ResetPasswordRequest {
-  username: string;
-  token: string;
-  NewPassword: string;
-  ConfirmPassword: string;
-}
+// export interface ResetPasswordRequest {
+//   username: string;
+//   token: string;
+//   NewPassword: string;
+//   ConfirmPassword: string;
+// }
 
 class AuthService {
   static register = async (
@@ -69,13 +69,7 @@ class AuthService {
     return await axiosConfig.post('auth/login', requestBody);
   };
 
-  static forgotpassword = async(
-    requestBody: ForgotPasswordRequest
-  ): Promise<AxiosResponse<ForgotPasswordResponse>> =>{
-    return await axiosConfig.post('auth/forgot-password', requestBody);
-  static getCurrentUser = async (): Promise<AxiosResponse<User>> => {
-    return await axiosConfig.get('auth/me');
-  };
+  
 }
 
 export default AuthService;

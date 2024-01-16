@@ -1,5 +1,6 @@
 import axiosConfig from '@/config/axios';
 import { AxiosResponse } from 'axios';
+import { request } from 'http';
 
 export interface RegisterResponse {
   status: string;
@@ -39,6 +40,22 @@ export interface User {
   updatedAt: string;
 }
 
+export interface ForgotPasswordRequest {
+  username: string;
+}
+
+export interface ForgotPasswordResponse {
+  status: string;
+  message: string;
+}
+
+export interface ResetPasswordRequest {
+  username: string;
+  token: string;
+  NewPassword: string;
+  ConfirmPassword: string;
+}
+
 class AuthService {
   static register = async (
     requestBody: RegisterRequest
@@ -50,6 +67,12 @@ class AuthService {
     requestBody: LoginRequest
   ): Promise<AxiosResponse<LoginResponse>> => {
     return await axiosConfig.post('auth/login', requestBody);
+  };
+
+  static forgotpassword = async(
+    requestBody: ForgotPasswordRequest
+  ): Promise<AxiosResponse<ForgotPasswordResponse>> =>{
+    return await axiosConfig.post('auth/forgot-password', requestBody);
   };
 }
 

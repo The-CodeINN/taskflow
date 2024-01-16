@@ -11,6 +11,11 @@ import { cn } from '@/lib/utils';
 import { Workspace } from '@/@types';
 import { mockData } from '@/db/mock.json';
 import useAuth from '@/hooks/useAuth';
+import useWorkspaces from '@/hooks/useWorkspace';
+import {
+  GetMyWorkspace,
+  GetMyWorkspacesData,
+} from '@/services/workspaceService';
 
 interface SidebarProps {
   storageKey?: string;
@@ -33,6 +38,9 @@ interface SidebarProps {
 
 const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
   const { logOut } = useAuth();
+  const { getMyWorkspacesQuery } = useWorkspaces();
+  const workspaces = getMyWorkspacesQuery?.data;
+  // console.log(workspaces);
 
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
@@ -83,7 +91,7 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
               defaultValue={defaultAccordionValue}
               className='space-y-2'
             >
-              {mockData.map((workspace: Workspace) => (
+              {/* {mockData.map((workspace: Workspace) => (
                 <NavbarItem
                   key={workspace.id}
                   workspace={workspace}
@@ -91,7 +99,22 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
                   isExpanded={expanded[workspace.id]}
                   isActive={workspace.id === '1'}
                 />
-              ))}
+              ))} */}
+              {workspaces?.status === 'SUCCESS' && workspaces.data ? (
+                (workspaces.data as GetMyWorkspace[]).map(
+                  (workspace: GetMyWorkspace) => (
+                    <NavbarItem
+                      key={workspace.id}
+                      workspace={workspace}
+                      onExpand={onExpand}
+                      isExpanded={expanded[workspace.id]}
+                      isActive={workspace.id === '1'}
+                    />
+                  )
+                )
+              ) : (
+                <p>Loading or no workspaces found</p>
+              )}
             </Accordion>
             <div className='space-y-2'>
               <Button

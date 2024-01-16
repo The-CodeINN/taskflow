@@ -51,6 +51,10 @@ class AuthService {
   ): Promise<AxiosResponse<LoginResponse>> => {
     return await axiosConfig.post('auth/login', requestBody);
   };
+
+  static getCurrentUser = async (): Promise<AxiosResponse<User>> => {
+    return await axiosConfig.get('auth/me');
+  };
 }
 
 export default AuthService;

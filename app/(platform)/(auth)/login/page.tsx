@@ -18,6 +18,7 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/useAuth';
+import { Loader2 } from 'lucide-react';
 
 const registerFormSchema = z.object({
   username: z.string().email({
@@ -41,7 +42,7 @@ const LoginPage = () => {
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = loginMutation.isPending;
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
@@ -104,8 +105,14 @@ const LoginPage = () => {
                 <Link href='/forgot-password'>Forgot password?</Link>
               </div>
               <div className=' py-10'>
-                <Button className='w-full' type='submit'>
-                  LOG IN
+                <Button disabled={isLoading} className='w-full' type='submit'>
+                  {isLoading ? (
+                    <div className='flex gap-2 items-center'>
+                      Loading <Loader2 className=' animate-spin' />
+                    </div>
+                  ) : (
+                    'LOG IN'
+                  )}
                 </Button>
               </div>
             </form>

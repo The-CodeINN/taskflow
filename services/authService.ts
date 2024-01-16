@@ -73,6 +73,8 @@ class AuthService {
     requestBody: ForgotPasswordRequest
   ): Promise<AxiosResponse<ForgotPasswordResponse>> =>{
     return await axiosConfig.post('auth/forgot-password', requestBody);
+  static getCurrentUser = async (): Promise<AxiosResponse<User>> => {
+    return await axiosConfig.get('auth/me');
   };
 }
 

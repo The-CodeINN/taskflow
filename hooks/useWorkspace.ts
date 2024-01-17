@@ -32,7 +32,7 @@ const useWorkspaces = () => {
         return response?.data;
       } catch (error: any) {
         console.log(error);
-        toast.error(error as string);
+        // toast.error(error as string);
       }
     },
   });

@@ -26,6 +26,8 @@ import {
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
 import useWorkspaces from '@/hooks/useWorkspace';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 const workspaceFormSchema = z.object({
   Name: z
@@ -49,17 +51,25 @@ const Workspace = () => {
     resolver: zodResolver(workspaceFormSchema),
     defaultValues: {
       Name: '',
-      Description:'',
+      Description: '',
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = createWorkspaceMutation.isPending;
 
   const onSubmit = (data: FormValues) => {
-    // console.log(data);
-    createWorkspaceMutation.mutate(data);
-    //toast.success('Workspace created successfully');
-    router.push('/workspace/1');
+    createWorkspaceMutation.mutate(data, {
+      onSuccess: (response) => {
+        const createdWorkspaceId = response.data.id;
+        if (createdWorkspaceId) {
+          router.push(`/workspace/${createdWorkspaceId}`);
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.message);
+        return;
+      },
+    });
   };
 
   return (
@@ -119,8 +129,18 @@ const Workspace = () => {
                         />
                       </div>
                       <CardFooter className='flex justify-end mt-3'>
-                        <Button className='text-white bg-sky-950' type='submit'>
-                          DONE
+                        <Button
+                          disabled={isLoading}
+                          className='text-white bg-sky-950'
+                          type='submit'
+                        >
+                          {isLoading ? (
+                            <div className='flex gap-2 items-center'>
+                              Loading <Loader2 className=' animate-spin' />
+                            </div>
+                          ) : (
+                            'DONE'
+                          )}
                         </Button>
                       </CardFooter>
                     </div>

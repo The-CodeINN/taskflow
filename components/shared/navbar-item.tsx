@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
 import { GetMyWorkspace } from '@/services/workspaceService';
+import { useWorkspaceStore } from '@/store/workspaceStore';
 
 interface NavbarItemProps {
   isExpanded: boolean;
@@ -26,6 +27,10 @@ export const NavbarItem = ({
 }: NavbarItemProps) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const setActiveWorkspace = useWorkspaceStore(
+    (state) => state.setActiveWorkspace
+  );
 
   const routes = [
     {
@@ -46,10 +51,13 @@ export const NavbarItem = ({
   return (
     <AccordionItem value={workspace.id} className=' border-none'>
       <AccordionTrigger
-        onClick={() => onExpand(workspace.id)}
+        onClick={() => {
+          onExpand(workspace.id);
+          setActiveWorkspace(workspace);
+        }}
         className={cn(
           'flex items-center gap-x-2 p-3 text-gray-100 rounded-md hover:bg-neutral-800/10 transition text-start no-underline hover:no-underline',
-          isActive && !isExpanded && 'bg-white text-black'
+          isActive && !isExpanded && 'bg-neutral-800/20 text-gray-100'
         )}
       >
         <div className='flex items-center gap-x-2'>

@@ -11,7 +11,7 @@ export interface CreateWorkspaceResponse {
   data: CreateWorkspaceData;
 }
 
-interface CreateWorkspaceData {
+export interface CreateWorkspaceData {
   id: string;
   name: string;
   description: string;

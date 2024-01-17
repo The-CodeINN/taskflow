@@ -59,7 +59,7 @@ const Workspace = () => {
     // console.log(data);
     createWorkspaceMutation.mutate(data);
     //toast.success('Workspace created successfully');
-    //router.push('/workspace/1');
+    router.push('/workspace/1');
   };
 
   return (

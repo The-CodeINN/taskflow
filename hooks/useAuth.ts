@@ -39,41 +39,28 @@ const useAuth = () => {
   };
 
   const loginMutation = useMutation({
-  mutationFn: async (user: LoginRequest) => {
-    const response = await AuthService.login(user);
-    return response?.data;
-  },
-  onError: (error: AxiosError) => {
-    toast.error(axiosResponseMessage(error));
-    console.log(axiosResponseMessage(error));
-  },
-  onSuccess: (data) => {
-    const { status, data: responseData } = data;
-    toast.success(status);
-    setUser(responseData.user);
-    setToken(responseData.jwtToken);
-
-    // Get the return URL
-    const returnUrl = localStorage.getItem('/workspaceId');
-
-    // If the return URL is not null, redirect to it, otherwise go to default workspace
-    if (returnUrl) {
-      router.push(returnUrl);
-      // Clear the return URL
-      localStorage.removeItem('/workspaceId');
-    } else {
+    mutationFn: async (user: LoginRequest) => {
+      const response = await AuthService.login(user);
+      return response?.data;
+    },
+    onError: (error: AxiosError) => {
+      toast.error(axiosResponseMessage(error));
+      console.log(axiosResponseMessage(error));
+    },
+    onSuccess: (data) => {
+      const { status, data: responseData } = data;
+      // console.log(responseData);
+      toast.success(status);
+      setUser(responseData.user);
+      setToken(responseData.jwtToken);
       router.push('/workspace/1');
-    }
-  },
-});
+    },
+  });
 
- const logOut = () => {
-  // Store the current route in localStorage
-  localStorage.setItem('/workspaceId', window.location.pathname);
-  clearAuth();
-  router.push('/login');
-};
-
+  const logOut = () => {
+    clearAuth();
+    router.push('/login');
+  };
 
   const GetCurrentUser = () =>
     useQuery({

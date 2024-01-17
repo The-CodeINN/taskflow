@@ -84,9 +84,9 @@ NavbarItem.Skeleton = function SkeletonNavItem() {
   return (
     <div className='flex items-center gap-x-2'>
       <div className='w-10 h-10 relative shrink-0'>
-        <Skeleton className='h-full w-full absolute' />
+        <Skeleton className='h-full w-full absolute bg-neutral-800/10' />
       </div>
-      <Skeleton className='h-10 w-full' />
+      <Skeleton className='h-10 w-full bg-neutral-800/10' />
     </div>
   );
 };

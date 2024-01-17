@@ -21,6 +21,7 @@ import {
 } from '../ui/dropdown-menu';
 import useAuth from '@/hooks/useAuth';
 import { Skeleton } from '../ui/skeleton';
+import { useRouter } from 'next/navigation';
 
 const DashboardNavbar = () => {
   const { GetCurrentUser, logOut } = useAuth();
@@ -29,6 +30,8 @@ const DashboardNavbar = () => {
   const getFirstLetter = (name: string | undefined) => {
     return name?.charAt(0);
   };
+
+  const router = useRouter()
 
   return (
     <nav className='flex items-center px-8 py-4 border-b-2 border-gray-300'>
@@ -68,7 +71,7 @@ const DashboardNavbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push("/profile")}>
                       Profile
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>

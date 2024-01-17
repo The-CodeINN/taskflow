@@ -24,7 +24,11 @@ import {
 } from '../ui/drawer';
 import AddTask from '../project-components/add-task';
 
-const Header = () => {
+type HeaderProps = {
+  workspaceId: string
+}
+
+const Header = ({workspaceId}: HeaderProps) => {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [greetingMessage, setGreetingMessage] = useState<string>('');
 
@@ -92,7 +96,7 @@ const Header = () => {
                 <DialogDescription>
                   Make your project changes and save
                 </DialogDescription>
-                <AddTask />
+                <AddTask workspaceId={workspaceId} />
                 {/* <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose> */}
@@ -114,7 +118,7 @@ const Header = () => {
                   </DrawerDescription>
                 </DrawerHeader>
                 <div className='px-4'>
-                  <AddTask />
+                  <AddTask workspaceId={workspaceId} />
                 </div>
                 <DrawerFooter className='pt-2'>
                   <DrawerClose asChild>

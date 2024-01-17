@@ -24,12 +24,14 @@ const WorkspaceIdPage = ({ params }: WorkspaceIdPageProps) => {
   const { FetchWorkspaceProjectsQuery } = useProject();
   const projectsResponse = FetchWorkspaceProjectsQuery(params?.workspaceId);
   const isFetching = projectsResponse.isFetching;
+  const workspaceId = params?.workspaceId
 
   const projectsData = projectsResponse.data?.data;
 
   return (
     <>
-      <Header />
+      <Header workspaceId={workspaceId} />
+      
       <div className='flex flex-col gap-5'>
         <h1 className='font-medium text-muted-foreground'>My Projects</h1>
         {isFetching && (

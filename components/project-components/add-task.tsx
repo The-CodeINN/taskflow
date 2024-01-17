@@ -25,6 +25,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
+import useProject from '@/hooks/useProject';
 
 const addTaskFormSchema = z.object({
   title: z.string().min(1, {
@@ -46,7 +47,13 @@ const addTaskFormSchema = z.object({
 
 type AddTaskFormValues = z.infer<typeof addTaskFormSchema>;
 
-const AddTask = () => {
+const AddTask = ({
+  workspaceId
+}: {
+  workspaceId: string
+}) => {
+
+  const { createProjectMutation} = useProject()
   const form = useForm<AddTaskFormValues>({
     resolver: zodResolver(addTaskFormSchema),
     defaultValues: {
@@ -56,9 +63,21 @@ const AddTask = () => {
     },
   });
 
-  const onSubmit = (data: AddTaskFormValues) => {
-    console.log(data);
-  };
+
+
+const onSubmit = (data: AddTaskFormValues) => {
+  console.log(data);
+
+  createProjectMutation.mutate({
+    data: {
+      name: data.title,
+      description: data.description,
+      startdate: data.startDate.toISOString(), 
+      enddate: data.endDate.toISOString(),
+    },
+    workspaceId: workspaceId,
+  });
+};
 
   return (
     <>

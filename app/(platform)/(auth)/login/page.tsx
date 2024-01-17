@@ -19,6 +19,8 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import useWorkspaces from '@/hooks/useWorkspace';
+import { useEffect } from 'react';
 
 const registerFormSchema = z.object({
   username: z.string().email({
@@ -43,14 +45,23 @@ const LoginPage = () => {
   });
 
   const isLoading = loginMutation.isPending;
+  const { getMyWorkspacesQuery } = useWorkspaces();
+  const workspaces = getMyWorkspacesQuery?.data?.data;
+  console.log(workspaces);
 
   const onSubmit = (data: RegisterFormValues) => {
-    console.log(data);
-    // toast.success('Login successful');
-    // setTimeout(() => {
-    //   router.push(`workspace/${1}`);
-    // }, 1000);
-    loginMutation.mutate(data);
+    loginMutation.mutate(data, {
+      onSuccess: () => {
+        // Check if workspaces data is available
+        if (workspaces && workspaces.length > 0) {
+          // Redirect to the first workspace
+          router.push(`/workspace/${workspaces[0].id}`);
+        } else {
+          // Redirect to create-workspace route
+          router.push('/create-workspace');
+        }
+      },
+    });
   };
 
   return (

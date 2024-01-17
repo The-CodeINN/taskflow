@@ -53,7 +53,7 @@ const useAuth = () => {
       toast.success(status);
       setUser(responseData.user);
       setToken(responseData.jwtToken);
-      router.push('/workspace/1');
+      // router.push('/workspace/1');
     },
   });
 
@@ -71,7 +71,7 @@ const useAuth = () => {
           return response?.data?.data;
         } catch (error) {
           console.log(error);
-          toast.error(error as string);
+          // toast.error(error as string);
         }
       },
     });

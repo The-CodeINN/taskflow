@@ -39,7 +39,7 @@ const useProject = () => {
           return response?.data;
         } catch (error) {
           console.log(error);
-          //toast.error(error as string);
+          // toast.error(error as string);
         }
       },
     });

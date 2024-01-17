@@ -16,6 +16,7 @@ import {
   GetMyWorkspace,
   GetMyWorkspacesData,
 } from '@/services/workspaceService';
+import { Skeleton } from '../ui/skeleton';
 
 interface SidebarProps {
   storageKey?: string;
@@ -65,6 +66,19 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
     }));
   };
 
+  // if (getWorkspacesQuery.isFetching) {
+  //   return (
+  //     <>
+
+  //       <div className='space-y-2'>
+  //         <NavbarItem.Skeleton />
+  //         <NavbarItem.Skeleton />
+  //         <NavbarItem.Skeleton />
+  //       </div>
+  //     </>
+  //   );
+  // }
+
   return (
     <>
       <div className='flex flex-col h-full'>
@@ -113,7 +127,17 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
                   )
                 )
               ) : (
-                <p>Loading or no workspaces found</p>
+                <>
+                  <div className='flex items-center justify-between mb-2'>
+                    <Skeleton className='h-10 w-[50%] bg-neutral-800/10' />
+                    <Skeleton className='h-10 w-10 bg-neutral-800/10' />
+                  </div>
+                  <div className='space-y-2'>
+                    <NavbarItem.Skeleton />
+                    <NavbarItem.Skeleton />
+                    <NavbarItem.Skeleton />
+                  </div>
+                </>
               )}
             </Accordion>
             <div className='space-y-2'>

@@ -20,12 +20,15 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import useAuth from '@/hooks/useAuth';
+import { Skeleton } from '../ui/skeleton';
 
 const DashboardNavbar = () => {
-  const { GetCurrentUser } = useAuth();
+  const { GetCurrentUser, logOut } = useAuth();
   const user = GetCurrentUser();
-  console.log(user);
-  console.log(user?.data?.firstName);
+
+  const getFirstLetter = (name: string | undefined) => {
+    return name?.charAt(0);
+  };
 
   return (
     <nav className='flex items-center px-8 py-4 border-b-2 border-gray-300'>
@@ -33,52 +36,71 @@ const DashboardNavbar = () => {
       <div className='flex justify-end items-center w-full'>
         <div className='flex items-center gap-4'>
           <Bell className='cursor-pointer hidden lg:flex' size={24} />
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar className='cursor-pointer'>
-                <AvatarImage
+
+          {user.isLoading ? (
+            <div className='flex items-center gap-x-2'>
+              <div className='w-10 h-10 relative shrink-0'>
+                <Skeleton className='h-full w-full absolute bg-neutral-800/10' />
+              </div>
+              <div className='w-10 h-10 relative shrink-0'>
+                <Skeleton className='h-full w-full absolute bg-neutral-800/10' />
+              </div>
+              <div className='w-10 h-10 relative shrink-0'>
+                <Skeleton className='h-full w-full absolute bg-neutral-800/10' />
+              </div>
+            </div>
+          ) : (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className='cursor-pointer'>
+                    {/* <AvatarImage
                   className=' h-10 w-10'
                   src='https://avatars.githubusercontent.com/u/55942632?v=4'
-                />
-                <AvatarFallback>AJ</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-56'>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  Profile
-                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    Invite Members
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem>Email</DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                Log out
-                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <div>
-            <p className='text-sm font-semibold'>
-              {/* Jerry Abadi */}
-              {`${user?.data?.firstName} ${user?.data?.lastName}`}
-            </p>
-            <p className='text-xs text-gray-500'>Member</p>
-          </div>
+                /> */}
+                    <AvatarFallback className='space-x-1 bg-neutral-800/15'>
+                      {getFirstLetter(user?.data?.firstName)}
+                      {getFirstLetter(user?.data?.lastName)}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='w-56'>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      Profile
+                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger>
+                        Invite Members
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem>Email</DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logOut}>
+                    Log out
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div>
+                <p className='text-sm font-semibold'>
+                  {`${user?.data?.firstName} ${user?.data?.lastName}`}
+                </p>
+                <p className='text-xs text-gray-500'>Member</p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </nav>

@@ -17,6 +17,7 @@ import {
   GetMyWorkspacesData,
 } from '@/services/workspaceService';
 import { Skeleton } from '../ui/skeleton';
+import { useWorkspaceStore } from '@/store/workspaceStore';
 
 interface SidebarProps {
   storageKey?: string;
@@ -41,12 +42,13 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
   const { logOut } = useAuth();
   const { getMyWorkspacesQuery } = useWorkspaces();
   const workspaces = getMyWorkspacesQuery?.data;
-  // console.log(workspaces);
 
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
     {}
   );
+
+  const activeWorkspace = useWorkspaceStore((state) => state.activeWorkspace);
 
   const defaultAccordionValue: string[] = Object.keys(expanded).reduce(
     (acc: string[], key: string) => {
@@ -99,7 +101,7 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
               </Link>
             </Button>
           </div>
-          <div className='flex flex-col justify-between h-[75dvh] pt-10'>
+          <div className='flex flex-col justify-between h-[75dvh] pt-2'>
             <Accordion
               type='multiple'
               defaultValue={defaultAccordionValue}
@@ -122,7 +124,7 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
                       workspace={workspace}
                       onExpand={onExpand}
                       isExpanded={expanded[workspace.id]}
-                      isActive={workspace.id === '1'}
+                      isActive={activeWorkspace?.id === workspace.id} // Pass isActive prop
                     />
                   )
                 )

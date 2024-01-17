@@ -4,6 +4,25 @@ import { FolderOpenDot, MoreHorizontal } from 'lucide-react';
 import { Card } from '../ui/card';
 import { useRouter } from 'next/navigation';
 import { FetchWorkspaceProjectData } from '@/services/projectService';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 
 const ProjectCard = ({
   id,
@@ -31,7 +50,38 @@ const ProjectCard = ({
           Project Timeline - {`${startDate} - ${endDate}`}
         </div>
         <div className='text-primary cursor-pointer md:col-span-1 flex justify-end'>
-          <MoreHorizontal onClick={handleProjectClick} size={25} />
+          <Dialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <MoreHorizontal size={25} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className=' w-32'>
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={handleProjectClick}>
+                    View Details
+                  </DropdownMenuItem>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                  </DialogTrigger>
+                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. Are you sure you want to
+                  permanently delete this file from our servers?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button type='submit'>Confirm</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </Card>

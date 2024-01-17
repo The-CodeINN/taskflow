@@ -28,7 +28,7 @@ import { useRouter } from 'next/navigation';
 import useWorkspaces from '@/hooks/useWorkspace';
 
 const workspaceFormSchema = z.object({
-  nameofWorkspace: z
+  Name: z
     .string()
     .min(2, {
       message: 'Workspace name must be at least 2 characters.',
@@ -36,7 +36,7 @@ const workspaceFormSchema = z.object({
     .max(160, {
       message: 'Workspace must not be longer than 30 characters.',
     }),
-  email: z.string().email().or(z.undefined()),
+  Description: z.string(),
 });
 
 type FormValues = z.infer<typeof workspaceFormSchema>;
@@ -48,17 +48,18 @@ const Workspace = () => {
   const form = useForm<z.infer<typeof workspaceFormSchema>>({
     resolver: zodResolver(workspaceFormSchema),
     defaultValues: {
-      nameofWorkspace: '',
+      Name: '',
+      Description:'',
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
-    // createWorkspaceMutation.mutate(data);
-    // toast.success('Workspace created successfully');
-    // router.push('/workspace/1');
+    // console.log(data);
+    createWorkspaceMutation.mutate(data);
+    //toast.success('Workspace created successfully');
+    //router.push('/workspace/1');
   };
 
   return (
@@ -75,7 +76,7 @@ const Workspace = () => {
                   <div className='grid w-full items-center gap-4'>
                     <FormField
                       control={form.control}
-                      name='nameofWorkspace'
+                      name='Name'
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Name of your Workspace</FormLabel>
@@ -101,7 +102,7 @@ const Workspace = () => {
                       <div className='flex flex-col space-y-1.5'>
                         <FormField
                           control={form.control}
-                          name='email'
+                          name='Description'
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Email Address</FormLabel>

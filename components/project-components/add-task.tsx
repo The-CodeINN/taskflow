@@ -47,10 +47,16 @@ const addTaskFormSchema = z.object({
 
 type AddTaskFormValues = z.infer<typeof addTaskFormSchema>;
 
-const AddTask = ({ workspaceId }: { workspaceId: string }) => {
+const AddTask = ({
+  workspaceId,
+  closeModal,
+}: {
+  workspaceId: string;
+  closeModal: () => void;
+}) => {
   const { CreateProjectMutation } = useProject();
 
-  const createProjectMutation = CreateProjectMutation(workspaceId);
+  const createProjectMutation = CreateProjectMutation(workspaceId, closeModal);
   const form = useForm<AddTaskFormValues>({
     resolver: zodResolver(addTaskFormSchema),
     defaultValues: {

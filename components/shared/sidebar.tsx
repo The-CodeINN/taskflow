@@ -8,16 +8,14 @@ import { Button } from '../ui/button';
 import { Accordion } from '../ui/accordion';
 import { NavbarItem } from './navbar-item';
 import { cn } from '@/lib/utils';
-import { Workspace } from '@/@types';
-import { mockData } from '@/db/mock.json';
 import useAuth from '@/hooks/useAuth';
-import useWorkspaces from '@/hooks/useWorkspace';
 import {
   GetMyWorkspace,
-  GetMyWorkspacesData,
 } from '@/services/workspaceService';
 import { Skeleton } from '../ui/skeleton';
 import { useWorkspaceStore } from '@/store/workspaceStore';
+import useWorkspaces from '@/hooks/useWorkspace';
+import { log } from 'console';
 
 interface SidebarProps {
   storageKey?: string;
@@ -42,6 +40,7 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
   const { logOut } = useAuth();
   const { getMyWorkspacesQuery } = useWorkspaces();
   const workspaces = getMyWorkspacesQuery?.data;
+  console.log(workspaces)
 
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,

@@ -25,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 const WorkspaceSettingPage = () => {
   return (
-    <Card className="w-[700px] bg-gray-200">
+    <Card className=" items-center w-[700px] bg-gray-200">
       <CardHeader>
         <CardTitle>Settings</CardTitle>
         <CardDescription>Manage your workspace settings</CardDescription>
@@ -39,17 +39,14 @@ const WorkspaceSettingPage = () => {
               value={WorkspaceService.name}/>
             </div>
           </div>
-        </form>
-        <div className="py-5">
+           <div className="py-5">
           <Label>Inivite members to your workspace</Label>
            <Textarea/>
         </div>
-        <div>
-          <h1>Danger</h1>
-          <Button>Delete workspace</Button>
-        </div>
+        </form>
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex justify-between">
+        <Button>Delete workspace</Button>
         <Button>Done</Button>
       </CardFooter>
     </Card>

@@ -16,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+
 import {
   Form,
   FormControl,
@@ -70,6 +71,10 @@ const Workspace = () => {
         return;
       },
     });
+  };
+const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.back();
   };
 
   return (
@@ -128,7 +133,8 @@ const Workspace = () => {
                           )}
                         />
                       </div>
-                      <CardFooter className='flex justify-end mt-3'>
+                      <CardFooter className='flex justify-between mt-3'>
+                        <Button onClick={goBack}>Go Back</Button>
                         <Button
                           disabled={isLoading}
                           className='text-white bg-sky-950'

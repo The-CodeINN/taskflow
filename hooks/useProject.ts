@@ -14,7 +14,11 @@ import { toast } from 'sonner';
 
 const useProject = () => {
   const queryClient = useQueryClient();
-  const CreateProjectMutation = (workspaceId: string) =>
+
+  const CreateProjectMutation = (
+    workspaceId: string,
+    setIsopen?: (bool: boolean) => void
+  ) =>
     useMutation({
       mutationFn: async ({
         data,
@@ -33,6 +37,7 @@ const useProject = () => {
       onSuccess: (data) => {
         const { data: responseData, status } = data;
         toast.success(status);
+        setIsopen && setIsopen(false);
 
         const queryKey: InvalidateQueryFilters = {
           queryKey: ['workspaceProjects', workspaceId],

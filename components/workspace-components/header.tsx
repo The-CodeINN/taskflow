@@ -25,15 +25,19 @@ import {
 import AddTask from '../project-components/add-task';
 
 type HeaderProps = {
-  workspaceId: string
-}
+  workspaceId: string;
+};
 
-const Header = ({workspaceId}: HeaderProps) => {
+const Header = ({ workspaceId }: HeaderProps) => {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [greetingMessage, setGreetingMessage] = useState<string>('');
+  const [open, setOpen] = useState(false);
 
   const isDesktop = useMediaQuery('(min-width: 768px)');
-  const [open, setOpen] = useState(false);
+
+  const closeModal = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     // Get current time and set greeting message
@@ -78,7 +82,7 @@ const Header = ({workspaceId}: HeaderProps) => {
           </div>
 
           {isDesktop ? (
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
                   <div className='flex items-center gap-x-2 justify-between px-2'>
@@ -96,7 +100,7 @@ const Header = ({workspaceId}: HeaderProps) => {
                 <DialogDescription>
                   Make your project changes and save
                 </DialogDescription>
-                <AddTask workspaceId={workspaceId} />
+                <AddTask workspaceId={workspaceId} closeModal={closeModal} />
                 {/* <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose> */}
@@ -118,7 +122,7 @@ const Header = ({workspaceId}: HeaderProps) => {
                   </DrawerDescription>
                 </DrawerHeader>
                 <div className='px-4'>
-                  <AddTask workspaceId={workspaceId} />
+                  <AddTask workspaceId={workspaceId} closeModal={closeModal} />
                 </div>
                 <DrawerFooter className='pt-2'>
                   <DrawerClose asChild>

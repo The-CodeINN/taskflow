@@ -48,12 +48,15 @@ const addTaskFormSchema = z.object({
 type AddTaskFormValues = z.infer<typeof addTaskFormSchema>;
 
 const AddTask = ({
-  workspaceId
+  workspaceId,
+  closeModal,
 }: {
-  workspaceId: string
+  workspaceId: string;
+  closeModal: () => void;
 }) => {
+  const { CreateProjectMutation } = useProject();
 
-  const { createProjectMutation} = useProject()
+  const createProjectMutation = CreateProjectMutation(workspaceId, closeModal);
   const form = useForm<AddTaskFormValues>({
     resolver: zodResolver(addTaskFormSchema),
     defaultValues: {
@@ -63,21 +66,19 @@ const AddTask = ({
     },
   });
 
+  const onSubmit = (data: AddTaskFormValues) => {
+    console.log(data);
 
-
-const onSubmit = (data: AddTaskFormValues) => {
-  console.log(data);
-
-  createProjectMutation.mutate({
-    data: {
-      name: data.title,
-      description: data.description,
-      startdate: data.startDate.toISOString(), 
-      enddate: data.endDate.toISOString(),
-    },
-    workspaceId: workspaceId,
-  });
-};
+    createProjectMutation.mutate({
+      data: {
+        name: data.title,
+        description: data.description,
+        startdate: data.startDate.toISOString(),
+        enddate: data.endDate.toISOString(),
+      },
+      workspaceId: workspaceId,
+    });
+  };
 
   return (
     <>

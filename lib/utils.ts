@@ -10,3 +10,7 @@ export const formatDate = (dateString: string) => {
   const formattedDate = format(new Date(dateString), 'dd MMM, yyyy');
   return formattedDate;
 };
+
+export const getFirstLetter = (name: string | undefined) => {
+    return name?.charAt(0);
+  };

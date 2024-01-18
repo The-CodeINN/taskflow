@@ -22,14 +22,13 @@ import {
 import useAuth from '@/hooks/useAuth';
 import { Skeleton } from '../ui/skeleton';
 import { useRouter } from 'next/navigation';
+import { getFirstLetter } from '@/lib/utils';
 
 const DashboardNavbar = () => {
   const { GetCurrentUser, logOut } = useAuth();
   const user = GetCurrentUser();
 
-  const getFirstLetter = (name: string | undefined) => {
-    return name?.charAt(0);
-  };
+  
 
   const router = useRouter()
 
@@ -71,7 +70,7 @@ const DashboardNavbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push("/profile")}>
                       Profile
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>

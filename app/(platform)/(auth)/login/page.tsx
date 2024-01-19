@@ -47,6 +47,7 @@ const LoginPage = () => {
   const isLoading = loginMutation.isPending;
   const { getMyWorkspacesQuery } = useWorkspaces();
   const workspaces = getMyWorkspacesQuery?.data?.data;
+  const isFetchingWorkspaces = getMyWorkspacesQuery?.isFetching;
   console.log(workspaces);
 
   const onSubmit = (data: RegisterFormValues) => {
@@ -57,8 +58,10 @@ const LoginPage = () => {
           // Redirect to the first workspace
           router.push(`/workspace/${workspaces[0].id}`);
         } else {
-          // Redirect to create-workspace route
-          router.push('/create-workspace');
+          // Redirect to create-workspace route only if workspaces query has successfully fetched data
+          if (!isFetchingWorkspaces) {
+            router.push('/create-workspace');
+          }
         }
       },
     });

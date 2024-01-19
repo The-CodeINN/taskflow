@@ -23,6 +23,7 @@ import {
   FormMessage,
   FormItem,
   FormLabel,
+  FormDescription,
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
 import useWorkspaces from '@/hooks/useWorkspace';
@@ -38,7 +39,18 @@ const workspaceFormSchema = z.object({
     .max(160, {
       message: 'Workspace must not be longer than 30 characters.',
     }),
-  Description: z.string(),
+  Description: z.string({
+    required_error: 'Description is required',
+  }),
+  Members: z.string().refine(
+    (value) => {
+      const membersArray = value.split(/[ ,]+/).filter(Boolean);
+      return membersArray.every(
+        (email) => z.string().email().safeParse(email).success
+      );
+    },
+    { message: 'Invalid email addresses' }
+  ),
 });
 
 type FormValues = z.infer<typeof workspaceFormSchema>;
@@ -58,7 +70,16 @@ const Workspace = () => {
   const isLoading = createWorkspaceMutation.isPending;
 
   const onSubmit = (data: FormValues) => {
-    createWorkspaceMutation.mutate(data, {
+    const membersArray = data.Members.split(/[ ,]+/).filter(Boolean);
+
+    const requestData = {
+      Name: data.Name,
+      Description: data.Description,
+      Members: membersArray,
+    };
+
+    // console.log(requestData);
+    createWorkspaceMutation.mutate(requestData, {
       onSuccess: (response) => {
         const createdWorkspaceId = response.data.id;
         if (createdWorkspaceId) {
@@ -70,6 +91,8 @@ const Workspace = () => {
         return;
       },
     });
+
+    console.log(data);
   };
 
   return (
@@ -102,20 +125,43 @@ const Workspace = () => {
                       )}
                     />
                   </div>
+                  <div className='grid w-full items-center gap-4'>
+                    <FormField
+                      control={form.control}
+                      name='Description'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='text'
+                              disabled={isLoading}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className='text-xs' />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   <div className='grid w-full items-center gap-4 mt-5'>
                     <CardTitle>Invite Members</CardTitle>
-                    <CardDescription>
+                    {/* <CardDescription>
                       Invite members with their email addresses
-                    </CardDescription>
+                    </CardDescription> */}
 
                     <div className='grid w-full items-center gap-4'>
                       <div className='flex flex-col space-y-1.5'>
                         <FormField
                           control={form.control}
-                          name='Description'
+                          name='Members'
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Email Address</FormLabel>
+                              <FormDescription>
+                                Enter or paste one or more email addresses,
+                                separated by spaces or commas
+                              </FormDescription>
                               <FormControl>
                                 <Textarea
                                   disabled={isLoading}
@@ -123,6 +169,7 @@ const Workspace = () => {
                                   placeholder='Enter your email address here'
                                 />
                               </FormControl>
+
                               <FormMessage className='text-xs' />
                             </FormItem>
                           )}

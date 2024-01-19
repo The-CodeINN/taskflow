@@ -67,7 +67,7 @@ const AddTask = ({
   });
 
   const onSubmit = (data: AddTaskFormValues) => {
-    console.log(data);
+    // console.log(data);
 
     createProjectMutation.mutate({
       data: {

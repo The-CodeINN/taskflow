@@ -11,9 +11,8 @@ import { useRouter } from 'next/navigation';
     const { GetCurrentUser, logOut } = useAuth();
     const user = GetCurrentUser();
  
-    const goNext = (e: React.MouseEvent<HTMLButtonElement>) => {
-    //e.preventDefault();
-//router.push(`workspaces/${ProjectId}`);
+    const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
+
   };
 
     const router = useRouter()
@@ -50,7 +49,7 @@ import { useRouter } from 'next/navigation';
         </li>
     </ul>
     <div className="p-4 border-t mx-8 mt-2">
-        <Button className="w-1/2 block mx-auto rounded-full bg-primary hover:shadow-lg font-semibold text-white px-6 py-2" type='submit'onClick={goNext}>See Projects</Button>
+        <Button className="w-1/2 block mx-auto rounded-full bg-primary hover:shadow-lg font-semibold text-white px-6 py-2" type='submit'onClick={saveChanges}>See Projects</Button>
     </div>
 </div>  )
 }

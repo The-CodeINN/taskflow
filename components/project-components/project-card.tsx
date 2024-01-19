@@ -3,7 +3,7 @@
 import { FolderOpenDot, MoreHorizontal } from 'lucide-react';
 import { Card } from '../ui/card';
 import { useRouter } from 'next/navigation';
-import { FetchWorkspaceProjectData } from '@/services/projectService';
+import ProjectService, { FetchWorkspaceProjectData } from '@/services/projectService';
 import {
   Dialog,
   DialogContent,
@@ -23,6 +23,19 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
+import { useMutation } from '@tanstack/react-query';
+import useProject from '@/hooks/useProject';
+import { useState } from 'react';
+
+
+interface ProjectCardprops{
+      id:string,
+      name:string,
+      description:string,
+      startDate:string,
+      endDate:string,
+      workspaceId?:string,
+    }
 
 const ProjectCard = ({
   id,
@@ -30,11 +43,36 @@ const ProjectCard = ({
   description,
   startDate,
   endDate,
-}: FetchWorkspaceProjectData) => {
+  workspaceId,
+}: ProjectCardprops) => {
   const router = useRouter();
   const handleProjectClick = () => {
     router.push(`/project/${id}`);
   };
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { DeleteWorkspaceProjectMutation } = useProject();
+
+  const deleteWorkspaceMutation = DeleteWorkspaceProjectMutation(workspaceId!);
+
+  const handleDeleteProject = () => {
+    // Trigger the delete mutation when the user confirms
+    deleteWorkspaceMutation.mutate(
+      { workspaceId: workspaceId!, projectId: id },
+      {
+        onSettled: (_, __, result) => {
+          // Close the modal when the mutation is settled (completed or failed)
+          if (result) {
+            setIsOpen(false);
+          }
+        },
+      }
+    );
+  };
+  // const handleDeleteProject = () => {
+  //   deleteProjectMutation.mutate({ workspaceId: workspaceId!, projectId: id });
+  // };
+
 
   return (
     <Card className='rounded-lg shadow-sm hover:shadow-md p-4 md:p-6 bg-[#F9FAFB] border-[#EAECF0]'>
@@ -51,7 +89,7 @@ const ProjectCard = ({
         <span className='block md:inline'>{`${startDate} - ${endDate}`}</span>
         </div>
         <div className='text-primary cursor-pointer md:col-span-1 flex justify-end'>
-          <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <MoreHorizontal  size={25} />
@@ -79,7 +117,8 @@ const ProjectCard = ({
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button type='submit'>Confirm</Button>
+              <Button type='submit' onClick={handleDeleteProject}>
+Confirm</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

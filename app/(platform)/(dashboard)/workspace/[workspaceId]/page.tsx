@@ -53,6 +53,7 @@ const WorkspaceIdPage = ({ params }: WorkspaceIdPageProps) => {
                   description={project.description}
                   startDate={formatDate(project.startDate)}
                   endDate={formatDate(project.endDate)}
+                  workspaceId= {params.workspaceId}
                 />
               </div>
             ))

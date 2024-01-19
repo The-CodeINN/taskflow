@@ -62,23 +62,35 @@ const useProject = () => {
       },
     });
 
-  const DeleteWorkspaceProjectMutation = () =>
-    useMutation({
-      mutationFn: async ({
-        workspaceId,
-        projectId,
-      }: {
-        workspaceId: string;
-        projectId: string;
-      }) => {
-        const response = await ProjectService.deleteWorkspaceProject(
+  const DeleteWorkspaceProjectMutation = (
+    workspaceId: string,
+    setIsopen?: (bool: boolean) => void) => useMutation({
+        mutationFn: async ({
           workspaceId,
-          projectId
-        );
-        return response?.data;
-      },
-    });
-
+          projectId,
+        }: {
+          workspaceId: string;
+          projectId: string;
+        }) => {
+          const response = await ProjectService.deleteWorkspaceProject(
+            workspaceId,
+            projectId
+          );
+          return response?.data;
+        },
+       onSuccess: (data) => {
+          const { status } = data;
+          toast.success(status);
+          setIsopen && setIsopen(false);
+  
+          const queryKey: InvalidateQueryFilters = {
+            queryKey: ['workspaceProjects', workspaceId],
+          };
+          queryClient.invalidateQueries(queryKey);
+        },
+      });
+  
+  
   const UpdateWorkspaceProjectMutation = () =>
     useMutation({
       mutationFn: async ({

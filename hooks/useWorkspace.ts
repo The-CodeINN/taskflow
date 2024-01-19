@@ -19,7 +19,7 @@ const useWorkspaces = () => {
       console.log(axiosResponseMessage(error));
     },
     onSuccess: (data) => {
-      const { status } = data;
+      const { status, data: createWorkspaceResponseData } = data;
       toast.success(status);
     },
   });

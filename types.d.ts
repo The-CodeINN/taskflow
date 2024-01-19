@@ -7,3 +7,8 @@ interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+interface Card {
+  id: string;
+  title: string;
+}

@@ -4,12 +4,49 @@ import { AxiosResponse } from 'axios';
 export interface CreateWorkspaceRequest {
   Name: string;
   Description: string;
+  Members: string[];
 }
+// export interface CreateWorkspaceRequest {
+//   Name: string;
+//   Description: string;
+// }
 
 export interface CreateWorkspaceResponse {
   status: string;
-  data: CreateWorkspaceData;
+  data: Data;
 }
+
+interface Data {
+  id: string;
+  name: string;
+  description: string;
+  user: User;
+  workspaceMembers: WorkspaceMember[];
+  projects: any[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface WorkspaceMember {
+  id: string;
+  createdAt: string;
+  user: User;
+}
+
+interface User {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  userName: string;
+  emailConfirmed: string;
+  createdAt: string;
+  updatedAt: string;
+}
+// export interface CreateWorkspaceResponse {
+//   status: string;
+//   data: CreateWorkspaceData;
+// }
 
 export interface CreateWorkspaceData {
   id: string;

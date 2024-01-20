@@ -22,9 +22,9 @@ const useAuth = () => {
         // console.log(response.data);
         return response?.data;
       },
-      onError: (error: AxiosError) => {
-        toast.error(axiosResponseMessage(error));
-        // console.log(axiosResponseMessage(error));
+       onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
       },
       onSuccess: (data) => {
         const { status, message } = data;
@@ -43,10 +43,10 @@ const useAuth = () => {
       const response = await AuthService.login(user);
       return response?.data;
     },
-    onError: (error: AxiosError) => {
-      toast.error(axiosResponseMessage(error));
-      console.log(axiosResponseMessage(error));
-    },
+     onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      },
     onSuccess: (data) => {
       const { status, data: responseData } = data;
       // console.log(responseData);

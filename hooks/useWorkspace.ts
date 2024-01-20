@@ -14,10 +14,10 @@ const useWorkspaces = () => {
       const response = await WorkspaceService.createWorkspace(data);
       return response?.data;
     },
-    onError: (error: AxiosError) => {
-      toast.error(axiosResponseMessage(error));
-      console.log(axiosResponseMessage(error));
-    },
+     onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      },
     onSuccess: (data) => {
       const { status, data: createWorkspaceResponseData } = data;
       toast.success(status);

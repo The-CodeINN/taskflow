@@ -51,13 +51,9 @@ const LandingPage = () => {
           With Taskflow, task and project management and has never been easier.
         </p>
         <div className='flex justify-center items-center'>
-          <Image
-            src={'/homeProj.png'}
-            alt='Illustration'
-            width={850}
-            height={500}
-            className='px-0 sm:px-3 mt-10 max-w-full h-auto mb-5'
-          />
+          <video width={850} height={500} controls={false} autoPlay loop muted className='px-0 sm:px-3 mt-10 max-w-full h-auto mb-5'>
+            <source src='/Recording landing page.mp4' type='video/mp4' />
+          </video>
         </div>
       </div>
     </div>

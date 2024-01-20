@@ -31,7 +31,7 @@ const useProject = () => {
         return response?.data;
       },
       onError: (error: AxiosError) => {
-        toast.error(axiosResponseMessage(error));
+        toast.error(error.message);
         console.log(axiosResponseMessage(error));
       },
       onSuccess: (data) => {
@@ -56,8 +56,7 @@ const useProject = () => {
           );
           return response?.data;
         } catch (error) {
-          console.log(error);
-          // toast.error(error as string);
+          console.log(error);          
         }
       },
     });
@@ -88,6 +87,10 @@ const useProject = () => {
           };
           queryClient.invalidateQueries(queryKey);
         },
+        onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      }
       });
   
   
@@ -109,6 +112,10 @@ const useProject = () => {
         );
         return response?.data;
       },
+       onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      }
     });
 
   return {

@@ -78,9 +78,9 @@ const DashboardNavbar = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
+                      {/* <DropdownMenuSubTrigger>
                         Invite Members
-                      </DropdownMenuSubTrigger>
+                      </DropdownMenuSubTrigger> */}
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
                           <DropdownMenuItem>Email</DropdownMenuItem>

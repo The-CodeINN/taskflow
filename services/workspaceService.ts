@@ -58,23 +58,66 @@ export interface CreateWorkspaceData {
 
 export interface GetMyWorkspacesData {
   status: string;
-  data: GetMyWorkspace[];
+  data: MyWorkspaceDetails[];
 }
 
-export interface GetMyWorkspace {
+export interface MyWorkspaceDetails {
   id: string;
   name: string;
   description: string;
+  user: User;
+  workspaceMembers: WorkspaceMember[];
+  projects: Project[];
   createdAt: string;
   updatedAt: string;
 }
+
+interface Project {
+  id: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface WorkspaceMember {
+  id: string;
+  createdAt: string;
+  user: User;
+}
+
+interface User {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  userName: string;
+  emailConfirmed: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// export interface GetMyWorkspacesData {
+//   status: string;
+//   data: GetMyWorkspace[];
+// }
+
+// export interface GetMyWorkspace {
+//   id: string;
+//   name: string;
+//   description: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 export interface ShowAWorkspaceData {
   status: string;
   data: showWorkspace;
 }
 
-interface showWorkspace {
+interface showWorkspace extends MyWorkspaceDetails {
   id: string;
   name: string;
   description: string;

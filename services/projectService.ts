@@ -6,19 +6,38 @@ export interface CreateProjectRequest {
   description: string;
   startdate: string;
   enddate: string;
+  UserIds: string[];
 }
-
 export interface CreateProjectResponse {
   status: string;
-  data: CreateProjectResponseData;
+  data: Data;
 }
 
-export interface CreateProjectResponseData {
+interface Data {
   id: string;
   name: string;
   description: string;
   startDate: string;
   endDate: string;
+  createdAt: string;
+  updatedAt: string;
+  projectMembers: ProjectMember[];
+  projectTasks: any[];
+}
+
+interface ProjectMember {
+  id: string;
+  createdAt: string;
+  user: User;
+}
+
+interface User {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  userName: string;
+  emailConfirmed: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -50,6 +69,51 @@ export interface EditWorkspaceProjectRequest {
   enddate: string;
 }
 
+export interface ShowAProjectDataResponse {
+  status: string;
+  data: Data;
+}
+
+interface Data {
+  id: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
+  projectMembers: ProjectMember[];
+  projectTask: ProjectTask[];
+}
+
+interface ProjectTask {
+  id: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  stage: string;
+  createdAt: string;
+  updatedAt: string;
+  projectMember: ProjectMember;
+}
+
+interface ProjectMember {
+  id: string;
+  createdAt: string;
+  user: User;
+}
+
+interface User {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  userName: string;
+  emailConfirmed: string;
+  createdAt: string;
+  updatedAt: string;
+}
 class ProjectService {
   static async createProject(
     workspaceId: string,
@@ -84,6 +148,15 @@ class ProjectService {
     return await axiosConfig.put(
       `workspaces/${workspaceId}/projects/${projectId}`,
       requestBody
+    );
+  }
+
+  static async showAWorkspaceProject(
+    workspaceId: string,
+    projectId: string
+  ): Promise<AxiosResponse<ShowAProjectDataResponse>> {
+    return await axiosConfig.get(
+      `workspaces/${workspaceId}/projects/${projectId}`
     );
   }
 }

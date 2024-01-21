@@ -9,14 +9,14 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
-import { GetMyWorkspace } from '@/services/workspaceService';
+import { MyWorkspaceDetails } from '@/services/workspaceService';
 import { useWorkspaceStore } from '@/store/workspaceStore';
 
 interface NavbarItemProps {
   isExpanded: boolean;
   isActive: boolean;
   onExpand: (id: string) => void;
-  workspace: GetMyWorkspace;
+  workspace: MyWorkspaceDetails;
 }
 
 export const NavbarItem = ({

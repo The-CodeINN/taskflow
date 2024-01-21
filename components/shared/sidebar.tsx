@@ -9,38 +9,19 @@ import { Accordion } from '../ui/accordion';
 import { NavbarItem } from './navbar-item';
 import { cn } from '@/lib/utils';
 import useAuth from '@/hooks/useAuth';
-import {
-  GetMyWorkspace,
-} from '@/services/workspaceService';
 import { Skeleton } from '../ui/skeleton';
 import { useWorkspaceStore } from '@/store/workspaceStore';
 import useWorkspaces from '@/hooks/useWorkspace';
-import { log } from 'console';
 
 interface SidebarProps {
   storageKey?: string;
 }
 
-// export const WorkspaceList = [
-//   {
-//     name: "Workspace 1",
-//     id: "1",
-//   },
-//   {
-//     name: "Workspace 2",
-//     id: "2",
-//   },
-//   {
-//     name: "Workspace 3",
-//     id: "3",
-//   },
-// ];
-
 const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
   const { logOut } = useAuth();
   const { getMyWorkspacesQuery } = useWorkspaces();
-  const workspaces = getMyWorkspacesQuery?.data;
-  console.log(workspaces)
+  const isSuccessWorkspace = getMyWorkspacesQuery.isSuccess;
+  const workspaces = getMyWorkspacesQuery?.data?.data;
 
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
@@ -66,19 +47,6 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
       [id]: !expanded[id],
     }));
   };
-
-  // if (getWorkspacesQuery.isFetching) {
-  //   return (
-  //     <>
-
-  //       <div className='space-y-2'>
-  //         <NavbarItem.Skeleton />
-  //         <NavbarItem.Skeleton />
-  //         <NavbarItem.Skeleton />
-  //       </div>
-  //     </>
-  //   );
-  // }
 
   return (
     <>
@@ -106,27 +74,16 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
               defaultValue={defaultAccordionValue}
               className='space-y-2'
             >
-              {/* {mockData.map((workspace: Workspace) => (
-                <NavbarItem
-                  key={workspace.id}
-                  workspace={workspace}
-                  onExpand={onExpand}
-                  isExpanded={expanded[workspace.id]}
-                  isActive={workspace.id === '1'}
-                />
-              ))} */}
-              {workspaces?.status === 'SUCCESS' && workspaces.data ? (
-                (workspaces.data as GetMyWorkspace[]).map(
-                  (workspace: GetMyWorkspace) => (
-                    <NavbarItem
-                      key={workspace.id}
-                      workspace={workspace}
-                      onExpand={onExpand}
-                      isExpanded={expanded[workspace.id]}
-                      isActive={activeWorkspace?.id === workspace.id} // Pass isActive prop
-                    />
-                  )
-                )
+              {isSuccessWorkspace ? (
+                workspaces?.map((workspace) => (
+                  <NavbarItem
+                    key={workspace.id}
+                    workspace={workspace}
+                    onExpand={onExpand}
+                    isExpanded={expanded[workspace.id]}
+                    isActive={activeWorkspace?.id === workspace.id} // Pass isActive prop
+                  />
+                ))
               ) : (
                 <>
                   <div className='flex items-center justify-between mb-2'>

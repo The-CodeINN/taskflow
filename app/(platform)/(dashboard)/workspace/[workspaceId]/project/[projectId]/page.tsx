@@ -1,13 +1,17 @@
-"use client";
+'use client';
 
-import MetricCard from "@/components/workspace-components/metric-card";
-import { ClipboardList, Layers3, ListTodo } from "lucide-react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useState } from "react";
-import dynamic from "next/dynamic";
-const Column = dynamic(() => import("@/components/project-components/Column"), {
+import MetricCard from '@/components/workspace-components/metric-card';
+import { ClipboardList, Layers3, ListTodo } from 'lucide-react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+const Column = dynamic(() => import('@/components/project-components/Column'), {
   ssr: false,
 });
+
+type TaskPageProps = {
+  params: { taskId: string };
+};
 
 type Task = {
   id: number;
@@ -28,33 +32,36 @@ type State = {
 
 const initialData: State = {
   tasks: {
-    1: { id: 1, content: "Configure Next js" },
-    2: { id: 2, content: "Build app" },
-    3: { id: 3, content: "Design app" },
-    4: { id: 4, content: "Create cards" },
-    5: { id: 5, content: "Turn up" },
+    1: { id: 1, content: 'Configure Next js' },
+    2: { id: 2, content: 'Build app' },
+    3: { id: 3, content: 'Design app' },
+    4: { id: 4, content: 'Create cards' },
+    5: { id: 5, content: 'Turn up' },
   },
   columns: {
     column1: {
-      id: "column1",
-      title: "To-do",
+      id: 'column1',
+      title: 'To-do',
       taskIds: [1, 2, 3, 4, 5],
     },
     column2: {
-      id: "column2",
-      title: "In Progress",
+      id: 'column2',
+      title: 'In Progress',
       taskIds: [],
     },
     column3: {
-      id: "column3",
-      title: "Completed",
+      id: 'column3',
+      title: 'Completed',
       taskIds: [],
     },
   },
-  columnOrder: ["column1", "column2", "column3"],
+  columnOrder: ['column1', 'column2', 'column3'],
 };
 
-const ProjectIdPage = () => {
+const ProjectIdPage = ({ params }: TaskPageProps) => {
+  const taskId = params?.taskId;
+  console.log(taskId);
+
   const [state, setState] = useState(initialData);
 
   const reorderColumnList = (
@@ -141,28 +148,28 @@ const ProjectIdPage = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <section>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className='grid md:grid-cols-3 gap-4'>
             <MetricCard
-              title="Total Projects"
-              value="4"
+              title='Total Projects'
+              value='4'
               icon={Layers3}
-              iconClassName="text-violet-500"
+              iconClassName='text-violet-500'
             />
             <MetricCard
-              title="Pending Tasks"
-              value="3"
+              title='Pending Tasks'
+              value='3'
               icon={ClipboardList}
-              iconClassName="text-pink-700"
+              iconClassName='text-pink-700'
             />
             <MetricCard
-              title="Completed Tasks"
-              value="3"
+              title='Completed Tasks'
+              value='3'
               icon={ListTodo}
-              iconClassName="text-violet-500"
+              iconClassName='text-violet-500'
             />
           </div>
         </section>
-        <div className="flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden">
+        <div className='flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden'>
           {state.columnOrder.map((columnId) => {
             const column = state.columns[columnId];
             const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);

@@ -56,44 +56,64 @@ const useProject = () => {
           );
           return response?.data;
         } catch (error) {
-          console.log(error);          
+          console.log(error);
+        }
+      },
+    });
+
+  const FetchAWorkspaceProjectQuery = (
+    workspaceId: string,
+    projectId: string
+  ) =>
+    useQuery({
+      queryKey: ['workspaceProject', workspaceId, projectId],
+      queryFn: async () => {
+        try {
+          const response = await ProjectService.showAWorkspaceProject(
+            workspaceId,
+            projectId
+          );
+          return response?.data;
+        } catch (error) {
+          console.log(error);
         }
       },
     });
 
   const DeleteWorkspaceProjectMutation = (
     workspaceId: string,
-    setIsopen?: (bool: boolean) => void) => useMutation({
-        mutationFn: async ({
+    setIsopen?: (bool: boolean) => void
+  ) =>
+    useMutation({
+      mutationFn: async ({
+        workspaceId,
+        projectId,
+      }: {
+        workspaceId: string;
+        projectId: string;
+      }) => {
+        const response = await ProjectService.deleteWorkspaceProject(
           workspaceId,
-          projectId,
-        }: {
-          workspaceId: string;
-          projectId: string;
-        }) => {
-          const response = await ProjectService.deleteWorkspaceProject(
-            workspaceId,
-            projectId
-          );
-          return response?.data;
-        },
-       onSuccess: (data) => {
-          const { status } = data;
-          toast.success(status);
-          setIsopen && setIsopen(false);
-  
-          const queryKey: InvalidateQueryFilters = {
-            queryKey: ['workspaceProjects', workspaceId],
-          };
-          queryClient.invalidateQueries(queryKey);
-        },
-        onError: (error: AxiosError) => {
+          projectId
+        );
+        return response?.data;
+      },
+      onSuccess: (data) => {
+        const { status } = data;
+        toast.success(status);
+        setIsopen && setIsopen(false);
+
+        const queryKey: InvalidateQueryFilters = {
+          queryKey: ['workspaceProjects', workspaceId],
+        };
+        queryClient.invalidateQueries(queryKey);
+      },
+      onError: (error: AxiosError) => {
         toast.error(error.message);
         console.log(axiosResponseMessage(error));
-      }
-      });
-  
-  
+      },
+    });
+
   const UpdateWorkspaceProjectMutation = () =>
     useMutation({
       mutationFn: async ({
@@ -112,10 +132,10 @@ const useProject = () => {
         );
         return response?.data;
       },
-       onError: (error: AxiosError) => {
+      onError: (error: AxiosError) => {
         toast.error(error.message);
         console.log(axiosResponseMessage(error));
-      }
+      },
     });
 
   return {
@@ -123,6 +143,7 @@ const useProject = () => {
     FetchWorkspaceProjectsQuery,
     DeleteWorkspaceProjectMutation,
     UpdateWorkspaceProjectMutation,
+    FetchAWorkspaceProjectQuery,
   };
 };
 

@@ -85,12 +85,8 @@ const Header = ({ workspaceId }: HeaderProps) => {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
-                  <div className='flex items-center gap-x-2 justify-between px-2'>
-                    <div>
-                      <Plus className='text-md text-white' />
-                    </div>
-                    <div>Add New Project</div>
-                  </div>
+                  <Plus className='text-md text-white mr-2' />
+                  Add New Project
                 </Button>
               </DialogTrigger>
               <DialogContent className='sm:max-w-[650px]'>

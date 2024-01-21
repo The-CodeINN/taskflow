@@ -14,10 +14,10 @@ const useWorkspaces = () => {
       const response = await WorkspaceService.createWorkspace(data);
       return response?.data;
     },
-     onError: (error: AxiosError) => {
-        toast.error(error.message);
-        console.log(axiosResponseMessage(error));
-      },
+    onError: (error: AxiosError) => {
+      toast.error(error.message);
+      console.log(axiosResponseMessage(error));
+    },
     onSuccess: (data) => {
       const { status, data: createWorkspaceResponseData } = data;
       toast.success(status);
@@ -37,7 +37,26 @@ const useWorkspaces = () => {
     },
   });
 
-  return { createWorkspaceMutation, getMyWorkspacesQuery };
+  const GetShowAWorkspaceQuery = (workspaceId: string) => {
+    return useQuery({
+      queryKey: ['getShowAWorkspace', workspaceId],
+      queryFn: async () => {
+        try {
+          const response = await WorkspaceService.showAWorkspace(workspaceId);
+          return response?.data;
+        } catch (error: any) {
+          console.log(error);
+          // toast.error(error as string);
+        }
+      },
+    });
+  };
+
+  return {
+    createWorkspaceMutation,
+    getMyWorkspacesQuery,
+    GetShowAWorkspaceQuery,
+  };
 };
 
 export default useWorkspaces;

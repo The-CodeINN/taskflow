@@ -12,13 +12,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from '@/components/ui/select';
+import Select from 'react-select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
@@ -26,6 +27,7 @@ import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
 import useProject from '@/hooks/useProject';
+import useWorkspaces from '@/hooks/useWorkspace';
 
 const addTaskFormSchema = z.object({
   title: z.string().min(1, {
@@ -34,8 +36,8 @@ const addTaskFormSchema = z.object({
   description: z.string().min(1, {
     message: 'Description is required',
   }),
-  members: z.string({
-    required_error: 'Members are required',
+  members: z.array(z.string()).refine((data) => data.length > 0, {
+    message: 'Members are required',
   }),
   startDate: z.date({
     required_error: 'Start date is required',
@@ -55,6 +57,20 @@ const AddTask = ({
   closeModal: () => void;
 }) => {
   const { CreateProjectMutation } = useProject();
+  const { GetShowAWorkspaceQuery } = useWorkspaces();
+
+  const workspaceData = GetShowAWorkspaceQuery(workspaceId)?.data?.data;
+
+  console.log(workspaceData);
+
+  const members = workspaceData?.workspaceMembers;
+
+  const options = Array.isArray(members)
+    ? members.map((member) => ({
+        value: member.user.id,
+        label: `${member.user.firstName} ${member.user.lastName}`,
+      }))
+    : [];
 
   const createProjectMutation = CreateProjectMutation(workspaceId, closeModal);
   const form = useForm<AddTaskFormValues>({
@@ -62,7 +78,7 @@ const AddTask = ({
     defaultValues: {
       title: '',
       description: '',
-      members: '',
+      members: [], // Initialize members as an array
     },
   });
 
@@ -75,6 +91,7 @@ const AddTask = ({
         description: data.description,
         startdate: data.startDate.toISOString(),
         enddate: data.endDate.toISOString(),
+        UserIds: data.members, // Pass the selected members
       },
       workspaceId: workspaceId,
     });
@@ -126,30 +143,20 @@ const AddTask = ({
                   <FormLabel>Project Members</FormLabel>
                   <FormControl>
                     <Select
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder='Add project members' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value='jerry'>Jerry Abadi</SelectItem>
-                        <SelectItem value='m@google.com'>
-                          Richard Emijere
-                        </SelectItem>
-                        <SelectItem value='hashiru'>
-                          Hashiru Abdullahi
-                        </SelectItem>
-                        <SelectItem value='joshua'>Adurotimi Joshua</SelectItem>
-                        <SelectItem value='femi'>
-                          Oloruntuyi Oluwafemi
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                      isMulti
+                      className='basic-multi-select'
+                      classNamePrefix='select'
+                      options={options}
+                      value={options.filter((option) =>
+                        field.value.includes(option.value)
+                      )}
+                      onChange={(selectedOptions) =>
+                        form.setValue(
+                          'members',
+                          selectedOptions.map((opt) => opt.value)
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

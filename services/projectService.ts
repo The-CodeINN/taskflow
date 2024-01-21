@@ -6,19 +6,38 @@ export interface CreateProjectRequest {
   description: string;
   startdate: string;
   enddate: string;
+  UserIds: string[];
 }
-
 export interface CreateProjectResponse {
   status: string;
-  data: CreateProjectResponseData;
+  data: Data;
 }
 
-export interface CreateProjectResponseData {
+interface Data {
   id: string;
   name: string;
   description: string;
   startDate: string;
   endDate: string;
+  createdAt: string;
+  updatedAt: string;
+  projectMembers: ProjectMember[];
+  projectTasks: any[];
+}
+
+interface ProjectMember {
+  id: string;
+  createdAt: string;
+  user: User;
+}
+
+interface User {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  userName: string;
+  emailConfirmed: string;
   createdAt: string;
   updatedAt: string;
 }

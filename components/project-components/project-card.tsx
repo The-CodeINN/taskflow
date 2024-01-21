@@ -117,8 +117,7 @@ const ProjectCard = ({
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-              <Button type='submit' onClick={handleDeleteProject}>
-Confirm</Button>
+              <Button type='submit' onClick={handleDeleteProject}>Confirm</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

@@ -227,10 +227,16 @@ const AddTask = ({
                         <Calendar
                           mode='single'
                           selected={field.value}
-                          onSelect={field.onChange}
+                          onSelect={(date) => {
+                            // Check if the selected date is not before the start date
+                            if (!form.getValues('startDate') || date! >= form.getValues('startDate')) {
+                              field.onChange(date);
+                            }
+                          }}
                           disabled={(date) =>
                             date.getTime() < new Date().setHours(0, 0, 0, 0) ||
-                            date > new Date('2100-01-02')
+                            date > new Date('2100-01-02') ||
+                            (form.getValues('startDate') && date < form.getValues('startDate'))
                           }
                           initialFocus
                         />

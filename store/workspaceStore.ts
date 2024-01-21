@@ -1,9 +1,9 @@
-import { GetMyWorkspace } from '@/services/workspaceService';
+import { MyWorkspaceDetails } from '@/services/workspaceService';
 import { create } from 'zustand';
 
 type WorkspaceStore = {
-  activeWorkspace: GetMyWorkspace | null;
-  setActiveWorkspace: (workspace: GetMyWorkspace | null) => void;
+  activeWorkspace: MyWorkspaceDetails | null;
+  setActiveWorkspace: (workspace: MyWorkspaceDetails | null) => void;
 };
 
 export const useWorkspaceStore = create<WorkspaceStore>((set) => ({

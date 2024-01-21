@@ -26,8 +26,11 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { AlertTriangle } from "lucide-react"
 import WorkspaceService, { DeleteWorkspaceResponse } from "@/services/workspaceService";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from 'react';
+import axiosConfig from "@/config/axios";
+import { toast } from "sonner";
+import axiosResponseMessage from "@/lib/axiosResponseMessage";
 
 //  const handleDeleteWorkspace = async () => {
 //     try {
@@ -40,29 +43,35 @@ import { useState, useEffect } from 'react';
 //   };
 
 const WorkspaceSettingPage = () => {
-  // const [workspaceName, setWorkspaceName] = useState("Initial Workspace Name");
+  const queryClient = useQueryClient();
 
-  // const getMyWorkspacesQuery = useQuery({
-  //   queryKey: ['getMyWorkspace'],
-  //   queryFn: async () => {
-  //     try {
-  //       const response = await WorkspaceService.getMyWorkspaces();
-  //       return response?.data;
-  //     } catch (error: any) {
-  //       console.log(error);
-  //       // toast.error(error as string);
-  //     }
-  //   },
-  // });
+  const DeleteWorkspaceMutation = useMutation({
+    mutationFn: async () => {
+      // Call your deleteWorkspace API function
+      const response = await axiosConfig.delete('workspace/workspaceid');
+      return response?.data;
+    },
+    onSuccess: (data) => {
+      const { status } = data;
+      toast.success(status);
 
-  // Update workspaceName state when data is fetched
-  // useEffect(() => {
-  //   if (getMyWorkspacesQuery.data) {
-  //     // Assuming data is an array and you want the first workspace's name
-  //     const firstWorkspaceName = getMyWorkspacesQuery.data?.name || "Default Workspace Name";
-  //     setWorkspaceName(firstWorkspaceName);
-  //   }
-  // }, [getMyWorkspacesQuery.data]);
+      // You may redirect to a different page or perform additional actions after deletion
+
+      // Invalidate queries related to the deleted workspace
+      // const queryKey = ['workspaceProjects', 'your-workspace-id'];
+      // queryClient.invalidateQueries(queryKey);
+    },
+    onError: (error) => {
+      toast.error(axiosResponseMessage(error));
+    },
+  });
+
+  const handleDeleteWorkspace = () => {
+    // Call the mutation to delete the workspace
+    DeleteWorkspaceMutation.mutate();
+  };
+
+
 
   return (
     <div>
@@ -115,9 +124,12 @@ const WorkspaceSettingPage = () => {
       <CardFooter className="flex justify-between mt-1">
         <div>
         <h1 className="font-bold">Delete your workspace</h1>
-       <Button className="mt-1 bg-red-600 hover:bg-red-800" >
-          Delete workspace <span className="ml-2"><AlertTriangle /></span>
-       </Button>
+        <Button
+                  className="mt-1 bg-red-600 hover:bg-red-800"
+                  onClick={handleDeleteWorkspace}
+                >
+                  Delete workspace <span className="ml-2"><AlertTriangle /></span>
+                </Button>
         </div>
         <Button>Done</Button>
       </CardFooter>

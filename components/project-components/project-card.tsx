@@ -3,7 +3,9 @@
 import { FolderOpenDot, MoreHorizontal } from 'lucide-react';
 import { Card } from '../ui/card';
 import { useRouter } from 'next/navigation';
-import ProjectService, { FetchWorkspaceProjectData } from '@/services/projectService';
+import ProjectService, {
+  FetchWorkspaceProjectData,
+} from '@/services/projectService';
 import {
   Dialog,
   DialogContent,
@@ -27,15 +29,14 @@ import { useMutation } from '@tanstack/react-query';
 import useProject from '@/hooks/useProject';
 import { useState } from 'react';
 
-
-interface ProjectCardprops{
-      id:string,
-      name:string,
-      description:string,
-      startDate:string,
-      endDate:string,
-      workspaceId?:string,
-    }
+interface ProjectCardprops {
+  id: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  workspaceId?: string;
+}
 
 const ProjectCard = ({
   id,
@@ -47,11 +48,12 @@ const ProjectCard = ({
 }: ProjectCardprops) => {
   const router = useRouter();
   const handleProjectClick = () => {
-    router.push(`/project/${id}`);
+    router.push(`${workspaceId}/project/${id}`);
   };
   const [isOpen, setIsOpen] = useState(false);
 
-  const { DeleteWorkspaceProjectMutation } = useProject();
+  const { DeleteWorkspaceProjectMutation, FetchAWorkspaceProjectQuery } =
+    useProject();
 
   const deleteWorkspaceMutation = DeleteWorkspaceProjectMutation(workspaceId!);
 
@@ -73,7 +75,6 @@ const ProjectCard = ({
   //   deleteProjectMutation.mutate({ workspaceId: workspaceId!, projectId: id });
   // };
 
-
   return (
     <Card className='rounded-lg shadow-sm hover:shadow-md p-4 md:p-6 bg-[#F9FAFB] border-[#EAECF0]'>
       <div className='grid grid-cols-3 gap-4 items-center justify-between'>
@@ -85,14 +86,14 @@ const ProjectCard = ({
           </div>
         </div>
         <div className='text-sm  md:col-span-1'>
-         Project Timeline - 
-        <span className='block md:inline'>{`${startDate} - ${endDate}`}</span>
+          Project Timeline -
+          <span className='block md:inline'>{`${startDate} - ${endDate}`}</span>
         </div>
         <div className='text-primary cursor-pointer md:col-span-1 flex justify-end'>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <MoreHorizontal  size={25} />
+                <MoreHorizontal size={25} />
               </DropdownMenuTrigger>
               <DropdownMenuContent className=' w-32'>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
@@ -117,7 +118,9 @@ const ProjectCard = ({
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-              <Button type='submit' onClick={handleDeleteProject}>Confirm</Button>
+                <Button type='submit' onClick={handleDeleteProject}>
+                  Confirm
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

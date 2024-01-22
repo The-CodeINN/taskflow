@@ -1,7 +1,14 @@
 'use client';
 
 import MetricCard from '@/components/workspace-components/metric-card';
-import { ClipboardList, Ghost, Layers3, ListTodo, Plus } from 'lucide-react';
+import {
+  Bird,
+  ClipboardList,
+  Ghost,
+  Layers3,
+  ListTodo,
+  Plus,
+} from 'lucide-react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
@@ -10,6 +17,25 @@ import useProjectTasks from '@/hooks/useProjectTasks';
 import useAuth from '@/hooks/useAuth';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import { useMediaQuery } from 'usehooks-ts';
+import AddTask from '@/components/project-components/add-task';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 const Column = dynamic(() => import('@/components/project-components/Column'), {
   ssr: false,
 });
@@ -78,6 +104,8 @@ const ProjectIdPage = () => {
     columnOrder: ['TODO', 'INPROGRESS', 'COMPLETED'],
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
   // If projectId is an array, you may want to handle it appropriately
   const projectIdString = Array.isArray(projectId) ? projectId[0] : projectId;
 
@@ -228,22 +256,72 @@ const ProjectIdPage = () => {
       <div className=''>
         <div className='flex justify-between items-center'>
           <h1 className='font-bold text-3xl'>Project Name</h1>
-          <Button className='bg-primary hover:bg-blue-700 py-4'>
-            <Plus className='text-md text-white mr-2' />
-            Add New Task
-          </Button>
-        </div>
-        <div className='flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden'>
-          {!loading && tasksData?.data && tasksData?.data.length === 0 ? (
-            <div className=' mt-16 flex flex-col items-center gap-2 justify-center'>
-              <Ghost size={30} className=' w-8 h-8 text-zinc-800' />
-              <h3 className=' font-semibold text-xl'>
-                You&apos;re free as a bird
-              </h3>
-              <p>Add a task and get organizing!😉</p>
-            </div>
+          {isDesktop ? (
+            <Dialog
+            // open={open} onOpenChange={setOpen}
+            >
+              <DialogTrigger asChild>
+                <Button className='bg-primary hover:bg-blue-700 py-4'>
+                  <Plus className='text-md text-white mr-2' />
+                  Add New Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent className='sm:max-w-[650px]'>
+                <DialogHeader className='font-bold'>Add New Task</DialogHeader>
+                <DialogDescription>
+                  Make the task changes and save
+                </DialogDescription>
+                <AddTask
+                // workspaceId={workspaceId} closeModal={closeModal}
+                />
+                {/* <DialogClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogClose> */}
+              </DialogContent>
+            </Dialog>
           ) : (
-            state.columnOrder.map((columnId) => {
+            <Drawer
+            // open={open} onOpenChange={setOpen}
+            >
+              <DrawerTrigger asChild>
+                <Button className='bg-primary hover:bg-blue-700 py-4'>
+                  <Plus className='text-md text-white mr-2' />
+                  Add New Task
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className='px-6'>
+                <DrawerHeader className='text-left'>
+                  <DrawerTitle className='font-bold'>Add Task</DrawerTitle>
+                  <DrawerDescription>
+                    Make the task changes and save
+                  </DrawerDescription>
+                </DrawerHeader>
+                <div className='px-4'>
+                  <AddTask
+                  // workspaceId={workspaceId}
+                  // closeModal={closeModal}
+                  />
+                </div>
+                <DrawerFooter className='pt-2'>
+                  <DrawerClose asChild>
+                    <Button variant='outline'>Cancel</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          )}
+        </div>
+        {!loading && tasksData?.data && tasksData?.data.length === 0 ? (
+          <div className=' mt-16 flex flex-col items-center gap-2 justify-center'>
+            <Bird size={30} className=' w-8 h-8 text-zinc-800' />
+            <h3 className=' font-semibold text-xl'>
+              You&apos;re free as a bird
+            </h3>
+            <p>Add a task and get organizing!😉</p>
+          </div>
+        ) : (
+          <div className='flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden'>
+            {state.columnOrder.map((columnId) => {
               const column = state.columns[columnId];
               const tasks = column?.taskIds?.map(
                 (taskId) => state.tasks[taskId]
@@ -256,9 +334,9 @@ const ProjectIdPage = () => {
                   columnId={columnId}
                 />
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
       </div>
     </DragDropContext>
   );

@@ -22,7 +22,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '../ui/drawer';
-import AddTask from '../project-components/add-task';
+import AddProject from '../project-components/add-project';
 
 type HeaderProps = {
   workspaceId: string;
@@ -96,7 +96,7 @@ const Header = ({ workspaceId }: HeaderProps) => {
                 <DialogDescription>
                   Make your project changes and save
                 </DialogDescription>
-                <AddTask workspaceId={workspaceId} closeModal={closeModal} />
+                <AddProject workspaceId={workspaceId} closeModal={closeModal} />
                 {/* <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose> */}
@@ -118,7 +118,10 @@ const Header = ({ workspaceId }: HeaderProps) => {
                   </DrawerDescription>
                 </DrawerHeader>
                 <div className='px-4'>
-                  <AddTask workspaceId={workspaceId} closeModal={closeModal} />
+                  <AddProject
+                    workspaceId={workspaceId}
+                    closeModal={closeModal}
+                  />
                 </div>
                 <DrawerFooter className='pt-2'>
                   <DrawerClose asChild>

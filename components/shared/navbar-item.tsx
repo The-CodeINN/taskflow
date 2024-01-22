@@ -75,7 +75,7 @@ export const NavbarItem = ({
             onClick={() => onClick(route.href)}
             className={cn(
               'w-full font-normal justify-start pl-10 mb-1 hover:bg-[#eaeaea] hover:text-gray-600',
-              pathname === route.href && 'bg-white text-black'
+              pathname.includes(route.href) && 'bg-white text-black'
             )}
             variant='ghost'
           >

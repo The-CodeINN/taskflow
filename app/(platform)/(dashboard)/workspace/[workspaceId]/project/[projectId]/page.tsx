@@ -3,66 +3,125 @@
 import MetricCard from '@/components/workspace-components/metric-card';
 import { ClipboardList, Layers3, ListTodo } from 'lucide-react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRouter, useParams } from 'next/navigation';
+import useProjectTasks from '@/hooks/useProjectTasks';
+import useAuth from '@/hooks/useAuth';
 const Column = dynamic(() => import('@/components/project-components/Column'), {
   ssr: false,
 });
 
 type TaskPageProps = {
-  params: { taskId: string };
+  params?: { taskId?: string };
 };
 
 type Task = {
-  id: number;
-  content: string;
+  createdAt: string;
+  description: string;
+  endDate: string;
+  id: string;
+  name: string;
+  projectMember: {
+    createdAt: string;
+    id: string;
+    user: {
+      id: string;
+      lastName: string;
+      firstName: string;
+      email: string;
+      userName: string;
+    };
+  };
+  stage: string;
+  startDate: string;
+  updatedAt: string;
 };
 
 type Column = {
   id: string;
   title: string;
-  taskIds: number[];
+  taskIds: string[];
 };
 
 type State = {
-  tasks: Record<number, Task>;
+  tasks: Record<string, Task>;
   columns: Record<string, Column>;
   columnOrder: string[];
 };
 
-const initialData: State = {
-  tasks: {
-    1: { id: 1, content: 'Configure Next js' },
-    2: { id: 2, content: 'Build app' },
-    3: { id: 3, content: 'Design app' },
-    4: { id: 4, content: 'Create cards' },
-    5: { id: 5, content: 'Turn up' },
-  },
-  columns: {
-    column1: {
-      id: 'column1',
-      title: 'To-do',
-      taskIds: [1, 2, 3, 4, 5],
-    },
-    column2: {
-      id: 'column2',
-      title: 'In Progress',
-      taskIds: [],
-    },
-    column3: {
-      id: 'column3',
-      title: 'Completed',
-      taskIds: [],
-    },
-  },
-  columnOrder: ['column1', 'column2', 'column3'],
-};
+const ProjectIdPage = () => {
+  const { projectId } = useParams<{ projectId: string | string[] }>();
+  const { user } = useAuth();
 
-const ProjectIdPage = ({ params }: TaskPageProps) => {
-  const taskId = params?.taskId;
-  console.log(taskId);
+  const [state, setState] = useState<State>({
+    tasks: {},
+    columns: {
+      TODO: {
+        id: 'TODO',
+        title: 'TODO',
+        taskIds: [],
+      },
+      INPROGRESS: {
+        id: 'INPROGRESS',
+        title: 'INPROGRESS',
+        taskIds: [],
+      },
+      COMPLETED: {
+        id: 'COMPLETED',
+        title: 'COMPLETED',
+        taskIds: [],
+      },
+    },
+    columnOrder: ['TODO', 'INPROGRESS', 'COMPLETED'],
+  });
+  const [loading, setLoading] = useState<boolean>(true);
+  // If projectId is an array, you may want to handle it appropriately
+  const projectIdString = Array.isArray(projectId) ? projectId[0] : projectId;
 
-  const [state, setState] = useState(initialData);
+  // Now `projectIdString` is guaranteed to be a string
+  const { FetchProjectTasks, UpdateProjectTasks } = useProjectTasks();
+  const tasksData = FetchProjectTasks(projectIdString).data;
+  const updateTask = UpdateProjectTasks(projectId as string);
+
+  useEffect(() => {
+    const tasks: any = {};
+    const columns: Record<string, Column> = {
+      TODO: {
+        id: 'TODO',
+        title: 'TODO',
+        taskIds: [],
+      },
+      INPROGRESS: {
+        id: 'INPROGRESS',
+        title: 'INPROGRESS',
+        taskIds: [],
+      },
+      COMPLETED: {
+        id: 'COMPLETED',
+        title: 'COMPLETED',
+        taskIds: [],
+      },
+    };
+
+    tasksData?.data.forEach((task) => {
+      // console.log(tasksData);
+      tasks[task.id] = task;
+
+      columns[task.stage] = {
+        id: task.stage,
+        title: task.stage,
+        taskIds: columns[task.stage]?.taskIds
+          ? [...columns[task.stage].taskIds, task.id]
+          : [task.id],
+      };
+    });
+
+    setState((prev) => {
+      return { ...prev, columns, tasks };
+    });
+    setLoading(false);
+  }, [tasksData]);
 
   const reorderColumnList = (
     sourceCol: Column,
@@ -119,6 +178,8 @@ const ProjectIdPage = ({ params }: TaskPageProps) => {
       return;
     }
 
+    // console.log('destinationCol.title:', destinationCol.title);
+
     // If the user moves from one column to another
     const startTaskIds = Array.from(sourceCol.taskIds);
     const [remove] = startTaskIds.splice(source.index, 1);
@@ -142,46 +203,48 @@ const ProjectIdPage = ({ params }: TaskPageProps) => {
       },
     };
 
+    const projId: string = projectId as string;
+
+    updateTask.mutate({
+      taskId: remove,
+      projectId: projId,
+      data: {
+        Name: state.tasks[remove].name,
+        StartDate: state.tasks[remove].startDate,
+        EndDate: state.tasks[remove].endDate,
+        Description: state.tasks[remove].description,
+        UserId: user?.id!,
+        Stage: destinationCol.title,
+      },
+    });
+
     setState(newState);
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <section>
-          <div className='grid md:grid-cols-3 gap-4'>
-            <MetricCard
-              title='Total Projects'
-              value='4'
-              icon={Layers3}
-              iconClassName='text-violet-500'
-            />
-            <MetricCard
-              title='Pending Tasks'
-              value='3'
-              icon={ClipboardList}
-              iconClassName='text-pink-700'
-            />
-            <MetricCard
-              title='Completed Tasks'
-              value='3'
-              icon={ListTodo}
-              iconClassName='text-violet-500'
-            />
-          </div>
+          <h1 className='font-bold text-3xl'>Project Name</h1>
         </section>
         <div className='flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden'>
-          {state.columnOrder.map((columnId) => {
-            const column = state.columns[columnId];
-            const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-            return (
-              <Column
-                tasks={tasks}
-                column={column}
-                key={columnId}
-                columnId={columnId}
-              />
-            );
-          })}
+          {!loading &&
+            state.columnOrder.map((columnId) => {
+              // console.log({ columnId });
+              // console.log({ state });
+              const column = state.columns[columnId];
+              // console.log({ column });
+              const tasks = column?.taskIds?.map(
+                (taskId) => state.tasks[taskId]
+              );
+              return (
+                <Column
+                  tasks={tasks}
+                  column={column}
+                  key={columnId}
+                  columnId={columnId}
+                />
+              );
+            })}
         </div>
       </div>
     </DragDropContext>

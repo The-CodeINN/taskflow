@@ -220,6 +220,7 @@ const AddTask = ({
                               'w-[240px] pl-3 text-left font-normal',
                               !field.value && 'text-muted-foreground'
                             )}
+                            disabled={!form.getValues('startDate')}
                           >
                             {field.value ? (
                               format(field.value, 'PPP')

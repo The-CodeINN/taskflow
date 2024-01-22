@@ -14,13 +14,6 @@ type WorkspaceIdPageProps = {
   params: { workspaceId: string };
 };
 
-// export async function generateMetadata({ params }: WorkspaceIdPageProps) {
-//   return {
-//     title: `Workspace ${params.workspaceId}`,
-//     description: `Welcome to your workspace ${params.workspaceId}`,
-//   };
-// }
-
 const WorkspaceIdPage = ({ params }: WorkspaceIdPageProps) => {
   const { FetchWorkspaceProjectsQuery } = useProject();
   const projectsResponse = FetchWorkspaceProjectsQuery(params?.workspaceId);

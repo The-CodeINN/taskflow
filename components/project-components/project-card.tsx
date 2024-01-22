@@ -29,12 +29,7 @@ import { useMutation } from '@tanstack/react-query';
 import useProject from '@/hooks/useProject';
 import { useState } from 'react';
 
-interface ProjectCardprops {
-  id: string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
+interface ProjectCardprops extends FetchWorkspaceProjectData {
   workspaceId?: string;
 }
 
@@ -50,6 +45,7 @@ const ProjectCard = ({
   const handleProjectClick = () => {
     router.push(`${workspaceId}/project/${id}`);
   };
+
   const [isOpen, setIsOpen] = useState(false);
 
   const { DeleteWorkspaceProjectMutation, FetchAWorkspaceProjectQuery } =

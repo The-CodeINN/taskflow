@@ -269,7 +269,7 @@ const ProjectIdPage = () => {
               <DialogTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
                   <Plus className='text-md text-white mr-2' />
-                  Add New Project
+                  Add New Task
                 </Button>
               </DialogTrigger>
               <DialogContent className='sm:max-w-[650px]'>

@@ -81,6 +81,12 @@ type State = {
 const ProjectIdPage = () => {
   const { projectId } = useParams<{ projectId: string | string[] }>();
   const { user } = useAuth();
+    const [open, setOpen] = useState(false);
+
+    const closeModal = () => {
+    setOpen(false);
+  };
+
 
   const [state, setState] = useState<State>({
     tasks: {},
@@ -258,7 +264,7 @@ const ProjectIdPage = () => {
           <h1 className='font-bold text-3xl'>Project Name</h1>
           {isDesktop ? (
             <Dialog
-            // open={open} onOpenChange={setOpen}
+            open={open} onOpenChange={setOpen}
             >
               <DialogTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
@@ -272,6 +278,8 @@ const ProjectIdPage = () => {
                   Make the task changes and save
                 </DialogDescription>
                 <AddTask
+                closeModal={closeModal}
+                projectId={projectId as  string}
                 // workspaceId={workspaceId} closeModal={closeModal}
                 />
                 {/* <DialogClose asChild>
@@ -281,7 +289,7 @@ const ProjectIdPage = () => {
             </Dialog>
           ) : (
             <Drawer
-            // open={open} onOpenChange={setOpen}
+            open={open} onOpenChange={setOpen}
             >
               <DrawerTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
@@ -298,6 +306,9 @@ const ProjectIdPage = () => {
                 </DrawerHeader>
                 <div className='px-4'>
                   <AddTask
+                  closeModal={closeModal}
+                  projectId={projectId as  string}
+
                   // workspaceId={workspaceId}
                   // closeModal={closeModal}
                   />

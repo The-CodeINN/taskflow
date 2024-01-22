@@ -61,7 +61,7 @@ const AddProject = ({
 
   const workspaceData = GetShowAWorkspaceQuery(workspaceId)?.data?.data;
 
-  console.log(workspaceData);
+  // console.log(workspaceData);
 
   const members = workspaceData?.workspaceMembers;
 

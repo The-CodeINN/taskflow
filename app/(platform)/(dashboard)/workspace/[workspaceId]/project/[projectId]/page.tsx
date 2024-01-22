@@ -1,13 +1,15 @@
 'use client';
 
 import MetricCard from '@/components/workspace-components/metric-card';
-import { ClipboardList, Layers3, ListTodo } from 'lucide-react';
+import { ClipboardList, Ghost, Layers3, ListTodo, Plus } from 'lucide-react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useParams } from 'next/navigation';
 import useProjectTasks from '@/hooks/useProjectTasks';
 import useAuth from '@/hooks/useAuth';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 const Column = dynamic(() => import('@/components/project-components/Column'), {
   ssr: false,
 });
@@ -82,6 +84,7 @@ const ProjectIdPage = () => {
   // Now `projectIdString` is guaranteed to be a string
   const { FetchProjectTasks, UpdateProjectTasks } = useProjectTasks();
   const tasksData = FetchProjectTasks(projectIdString).data;
+  const isLoadingTaskData = FetchProjectTasks(projectIdString).isFetching;
   const updateTask = UpdateProjectTasks(projectId as string);
 
   useEffect(() => {
@@ -222,17 +225,26 @@ const ProjectIdPage = () => {
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <section>
+      <div className=''>
+        <div className='flex justify-between items-center'>
           <h1 className='font-bold text-3xl'>Project Name</h1>
-        </section>
+          <Button className='bg-primary hover:bg-blue-700 py-4'>
+            <Plus className='text-md text-white mr-2' />
+            Add New Task
+          </Button>
+        </div>
         <div className='flex mt-10 space-x-5 overflow-x-scroll lg:overflow-x-hidden'>
-          {!loading &&
+          {!loading && tasksData?.data && tasksData?.data.length === 0 ? (
+            <div className=' mt-16 flex flex-col items-center gap-2 justify-center'>
+              <Ghost size={30} className=' w-8 h-8 text-zinc-800' />
+              <h3 className=' font-semibold text-xl'>
+                You&apos;re free as a bird
+              </h3>
+              <p>Add a task and get organizing!😉</p>
+            </div>
+          ) : (
             state.columnOrder.map((columnId) => {
-              // console.log({ columnId });
-              // console.log({ state });
               const column = state.columns[columnId];
-              // console.log({ column });
               const tasks = column?.taskIds?.map(
                 (taskId) => state.tasks[taskId]
               );
@@ -244,7 +256,8 @@ const ProjectIdPage = () => {
                   columnId={columnId}
                 />
               );
-            })}
+            })
+          )}
         </div>
       </div>
     </DragDropContext>

@@ -71,9 +71,7 @@ const ProjectCard = ({
       }
     );
   };
-  // const handleDeleteProject = () => {
-  //   deleteProjectMutation.mutate({ workspaceId: workspaceId!, projectId: id });
-  // };
+  
 
   return (
     <Card className='rounded-lg shadow-sm hover:shadow-md p-4 md:p-6 bg-[#F9FAFB] border-[#EAECF0]'>

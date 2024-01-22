@@ -174,9 +174,10 @@ class WorkspaceService {
   }
 
   static async updateWorkspace(
+    workspaceId: string, 
     requestBody: UpdateWorkspaceRequest
   ): Promise<AxiosResponse<UpdateWorkspaceResponse>> {
-    return await axiosConfig.put('workspaces', requestBody);
+    return await axiosConfig.put(`workspaces/${workspaceId}`, requestBody);
   }
 
   static async deleteWorkspace(

@@ -2,13 +2,15 @@
 
 import axiosResponseMessage from '@/lib/axiosResponseMessage';
 import WorkspaceService, {
-  CreateWorkspaceRequest,
+  CreateWorkspaceRequest, UpdateWorkspaceRequest,
 } from '@/services/workspaceService';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { InvalidateQueryFilters, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 const useWorkspaces = () => {
+const queryClient = useQueryClient();
+
   const createWorkspaceMutation = useMutation({
     mutationFn: async (data: CreateWorkspaceRequest) => {
       const response = await WorkspaceService.createWorkspace(data);
@@ -52,10 +54,55 @@ const useWorkspaces = () => {
     });
   };
 
+  const DeleteWorkspaceMutation = (
+    workspaceId: string
+  ) =>
+    useMutation({
+      mutationFn: async ({ workspaceId }: { workspaceId: string }) => {
+        const response = await WorkspaceService.deleteWorkspace(workspaceId);
+        return response?.data;
+      },
+      onSuccess: (data) => {
+        const { status } = data;
+        toast.success(status);
+        const queryKey: InvalidateQueryFilters = {
+          queryKey: ['getMyWorkspace'],
+        };
+        queryClient.invalidateQueries(queryKey);
+      },
+      onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      },
+    });
+  
+  
+
+  const UpdateWorkspaceMutation = () =>
+  useMutation({
+    mutationFn: async ({
+      workspaceId,
+      data
+    }: {
+      workspaceId: string;
+      data: UpdateWorkspaceRequest;
+    }) => {
+      const response = await WorkspaceService.updateWorkspace(workspaceId, data);
+      return response?.data;
+    },
+    onError: (error: AxiosError) => {
+        toast.error(error.message);
+        console.log(axiosResponseMessage(error));
+      },
+    });
+
+    
   return {
     createWorkspaceMutation,
     getMyWorkspacesQuery,
     GetShowAWorkspaceQuery,
+    DeleteWorkspaceMutation,
+    UpdateWorkspaceMutation,
   };
 };
 

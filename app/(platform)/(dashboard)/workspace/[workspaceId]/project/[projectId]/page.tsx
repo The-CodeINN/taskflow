@@ -59,17 +59,17 @@ const ProjectIdPage = () => {
     columns: {
       TODO: {
         id: 'TODO',
-        title: 'To-do',
+        title: 'TODO',
         taskIds: [],
       },
       INPROGRESS: {
         id: 'INPROGRESS',
-        title: 'In Progress',
+        title: 'INPROGRESS',
         taskIds: [],
       },
       COMPLETED: {
         id: 'COMPLETED',
-        title: 'Completed',
+        title: 'COMPLETED',
         taskIds: [],
       },
     },
@@ -89,17 +89,17 @@ const ProjectIdPage = () => {
     const columns: Record<string, Column> = {
       TODO: {
         id: 'TODO',
-        title: 'To-do',
+        title: 'TODO',
         taskIds: [],
       },
       INPROGRESS: {
         id: 'INPROGRESS',
-        title: 'In Progress',
+        title: 'INPROGRESS',
         taskIds: [],
       },
       COMPLETED: {
         id: 'COMPLETED',
-        title: 'Completed',
+        title: 'COMPLETED',
         taskIds: [],
       },
     };
@@ -177,6 +177,8 @@ const ProjectIdPage = () => {
       setState(newState);
       return;
     }
+
+    // console.log('destinationCol.title:', destinationCol.title);
 
     // If the user moves from one column to another
     const startTaskIds = Array.from(sourceCol.taskIds);

@@ -15,7 +15,8 @@ import { toast } from 'sonner';
 const useProjectTasks = () => {
   const queryClient = useQueryClient();
 
-  const CreateTask = (projectId: string) =>
+  const CreateTask = (projectId: string, setIsopen?: (bool: boolean) => void
+) =>
     useMutation({
       mutationFn: async ({
         data,
@@ -30,6 +31,8 @@ const useProjectTasks = () => {
       onSuccess: (data) => {
         const { status } = data;
         toast.success(status);
+        setIsopen && setIsopen(false);
+
 
         const queryKey: InvalidateQueryFilters = {
           queryKey: ['projectTasks', projectId],

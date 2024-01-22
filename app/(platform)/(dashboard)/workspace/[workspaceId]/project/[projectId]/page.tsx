@@ -81,12 +81,11 @@ type State = {
 const ProjectIdPage = () => {
   const { projectId } = useParams<{ projectId: string | string[] }>();
   const { user } = useAuth();
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const closeModal = () => {
+  const closeModal = () => {
     setOpen(false);
   };
-
 
   const [state, setState] = useState<State>({
     tasks: {},
@@ -263,9 +262,7 @@ const ProjectIdPage = () => {
         <div className='flex justify-between items-center'>
           <h1 className='font-bold text-3xl'>Project Name</h1>
           {isDesktop ? (
-            <Dialog
-            open={open} onOpenChange={setOpen}
-            >
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
                   <Plus className='text-md text-white mr-2' />
@@ -278,9 +275,9 @@ const ProjectIdPage = () => {
                   Make the task changes and save
                 </DialogDescription>
                 <AddTask
-                closeModal={closeModal}
-                projectId={projectId as  string}
-                // workspaceId={workspaceId} closeModal={closeModal}
+                  closeModal={closeModal}
+                  projectId={projectId as string}
+                  // workspaceId={workspaceId} closeModal={closeModal}
                 />
                 {/* <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
@@ -288,9 +285,7 @@ const ProjectIdPage = () => {
               </DialogContent>
             </Dialog>
           ) : (
-            <Drawer
-            open={open} onOpenChange={setOpen}
-            >
+            <Drawer open={open} onOpenChange={setOpen}>
               <DrawerTrigger asChild>
                 <Button className='bg-primary hover:bg-blue-700 py-4'>
                   <Plus className='text-md text-white mr-2' />
@@ -306,11 +301,11 @@ const ProjectIdPage = () => {
                 </DrawerHeader>
                 <div className='px-4'>
                   <AddTask
-                  closeModal={closeModal}
-                  projectId={projectId as  string}
+                    closeModal={closeModal}
+                    projectId={projectId as string}
 
-                  // workspaceId={workspaceId}
-                  // closeModal={closeModal}
+                    // workspaceId={workspaceId}
+                    // closeModal={closeModal}
                   />
                 </div>
                 <DrawerFooter className='pt-2'>

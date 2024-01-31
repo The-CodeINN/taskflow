@@ -1,19 +1,23 @@
-import axiosResponseMessage from '@/lib/axiosResponseMessage';
+import NotFound from "@/app/not-found";
+import axiosResponseMessage from "@/lib/axiosResponseMessage";
 import ProjectService, {
   CreateProjectRequest,
   EditWorkspaceProjectRequest,
-} from '@/services/projectService';
+} from "@/services/projectService";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 import {
   InvalidateQueryFilters,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { toast } from 'sonner';
+} from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const useProject = () => {
   const queryClient = useQueryClient();
+
+  const activeWorkspace = useWorkspaceStore((state) => state.activeWorkspace);
 
   const CreateProjectMutation = (
     workspaceId: string,
@@ -40,7 +44,7 @@ const useProject = () => {
         setIsopen && setIsopen(false);
 
         const queryKey: InvalidateQueryFilters = {
-          queryKey: ['workspaceProjects', workspaceId],
+          queryKey: ["workspaceProjects", workspaceId],
         };
         queryClient.invalidateQueries(queryKey);
       },
@@ -48,16 +52,12 @@ const useProject = () => {
 
   const FetchWorkspaceProjectsQuery = (workspaceId: string) =>
     useQuery({
-      queryKey: ['workspaceProjects', workspaceId],
+      queryKey: ["workspaceProjects", workspaceId],
       queryFn: async () => {
-        try {
-          const response = await ProjectService.fetchWorkspaceProjects(
-            workspaceId
-          );
-          return response?.data;
-        } catch (error) {
-          console.log(error);
-        }
+        const response = await ProjectService.fetchWorkspaceProjects(
+          workspaceId
+        );
+        return response?.data;
       },
     });
 
@@ -66,7 +66,7 @@ const useProject = () => {
     projectId: string
   ) =>
     useQuery({
-      queryKey: ['workspaceProject', workspaceId, projectId],
+      queryKey: ["workspaceProject", workspaceId, projectId],
       queryFn: async () => {
         try {
           const response = await ProjectService.showAWorkspaceProject(
@@ -104,7 +104,7 @@ const useProject = () => {
         setIsopen && setIsopen(false);
 
         const queryKey: InvalidateQueryFilters = {
-          queryKey: ['workspaceProjects', workspaceId],
+          queryKey: ["workspaceProjects", workspaceId],
         };
         queryClient.invalidateQueries(queryKey);
       },

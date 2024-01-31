@@ -61,15 +61,7 @@ const router = useRouter();
 const handleDeleteWorkspace = async () => {
   try {
     await deleteWorkspaceMutation.mutateAsync({ workspaceId });
-    // Redirect after successful deletion
-    if (isSuccessWorkspace && workspaces && workspaces.length > 0) {
-      router.push(`/workspace/${workspaces[0].id}`);
-    } else {
-      // Redirect to create-workspace route only if workspaces query has successfully fetched data
-      if (!workspaces) {
-        router.replace('/create-workspace');  // Use router.replace instead of router.push
-      }
-    }
+
   } catch (error) {
     console.error("Error deleting workspace:", error);
   }
